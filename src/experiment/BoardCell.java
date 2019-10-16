@@ -1,3 +1,8 @@
+/*
+ * Authors: 
+ * Mia Blanchard 
+ * Bijan Chamanbahar
+ */
 package experiment;
 
 public class BoardCell {
@@ -9,5 +14,6 @@ public BoardCell(int col, int row) {
 	this.col = col;
 	this.row = row;
 }
+
 
 }

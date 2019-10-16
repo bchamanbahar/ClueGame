@@ -1,3 +1,8 @@
+/*
+ * Authors: 
+ * Mia Blanchard 
+ * Bijan Chamanbahar
+ */
 package experiment;
 import java.util.*;
 public class IntBoard {
