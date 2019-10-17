@@ -1,0 +1,36 @@
+commit 85bba33a930aa74252a7c517e11c8db14cb07ee7
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Oct 7 22:00:46 2019 -0600
+
+    Added more JUNIT tests'
+
+commit f98cba26bd33cb7bd9740aa11492c39d01d1373f
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Mon Oct 7 17:11:26 2019 -0600
+
+    Commiting JUnit tests and new version of code
+
+commit ce36fdb629cdcf6c22e26d28a65ba1c2ca4a9b6d
+Merge: 8c7f9e4 be7f69a
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 3 10:39:11 2019 -0600
+
+    Merge branch 'master' of https://github.com/bchamanbahar/ClueGame
+
+commit 8c7f9e4a2d02c0d93e4ef0086c6f80a67ca5e1ec
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 3 10:36:40 2019 -0600
+
+    Adding the expiriment package
+
+commit be7f69a314a1825726773e35c3b797ca4b193c2a
+Author: bchamanbahar <55850209+bchamanbahar@users.noreply.github.com>
+Date:   Thu Oct 3 10:34:04 2019 -0600
+
+    Create README.md
+
+commit 145456699d5d274235f33c7273ba97757a2a67d9
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 3 10:25:57 2019 -0600
+
+    First Commit
