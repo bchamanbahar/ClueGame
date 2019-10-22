@@ -6,14 +6,15 @@
 
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import experiment.BoardCell;
+import clueGame.BoardCell;
 import experiment.IntBoard;
 
 class IntBoardTests {
