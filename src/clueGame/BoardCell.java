@@ -21,6 +21,7 @@ public BoardCell(int col, int row) {
 	this.col = col;
 	this.row = row;		
 }
+
 public int getCol() {
 	return col;
 }
@@ -36,6 +37,7 @@ public BoardCell(int col, int row, char i) {
 	this.row = row;		
 	this.initial = i;
 }
+
 //returns true if the cell is a walkway
 public boolean isWalkway() {
 	if (this.initial == 'W') {
@@ -43,6 +45,7 @@ public boolean isWalkway() {
 	}
 	else return false;
 }
+
 //returns true if the cell is a room
 public boolean isRoom() {
 	if (this.initial == 'W') {
@@ -53,6 +56,7 @@ public boolean isRoom() {
 	}
 	else return true;
 }
+
 //returns true if the cell is a doorway
 public boolean isDoorway() {
 	if (door == DoorDirection.NONE) {
@@ -60,10 +64,12 @@ public boolean isDoorway() {
 	}
 	else return true;
 }
+
 //gets the door direction
 public DoorDirection getDoorDirection() {
 	return door;
 }
+
 //gets the initial
 public char getInitial() {
 	return initial; 

@@ -28,70 +28,21 @@ public class Board {
 	private Board() {
 		
 	}
+	
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
 	}
+	
 	//initialize the board
 	public void initialize() throws Exception {
-		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		int i=0;
-		int j=0;
-		try {
-			//load boardconfig file
-			BufferedReader br = new BufferedReader(new FileReader(boardConfigFile));
-			String row;
-			while ((row = br.readLine())!=null) {
-				j=0;
-				String []data = row.split(",");
-				for (String s : data) {
-					BoardCell cell = new BoardCell(i,j, s.charAt(0));
-					if (s.length()>1) {
-						//set door direction if there is a door
-						if (s.charAt(1)== 'U') {
-							cell.setDoor(DoorDirection.UP);
-						}
-						else if (s.charAt(1)== 'D') {
-							cell.setDoor(DoorDirection.DOWN);
-						}
-						else if (s.charAt(1)== 'L') {
-							cell.setDoor(DoorDirection.LEFT);
-						}
-						else if (s.charAt(1)== 'R') {
-							cell.setDoor(DoorDirection.RIGHT);
-						}
-						else cell.setDoor(DoorDirection.NONE);
-					}
-					//give it the none direction if there isn't a door
-					else cell.setDoor(DoorDirection.NONE);
-					//insert into the door
-					board[i][j] = cell; 
-					j++;
-				}
-				i++;
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		numRows = i;
-		numColumns = j;
-		legend = new HashMap();
-		try {
-			//load roomconfig file
-			BufferedReader br = new BufferedReader(new FileReader(roomConfigFile));
-			String row;
-			while ((row = br.readLine())!=null) {
-				String [] data = row.split(",");
-				//use the character as the key and insert into legend
-				legend.put(data[0].charAt(0), data[1].substring(1));
-			}
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		loadRoomConfig();
+		loadBoardConfig();
 		calcAdj();
 	}
+	
 	//load the rooms
 	public void loadRoomConfig() throws IOException, BadConfigFormatException {
 		legend = new HashMap();
@@ -104,7 +55,7 @@ public class Board {
 				//use the character as the key and insert into legend
 				legend.put(data[0].charAt(0), data[1].substring(1));
 				//checks if it's a card or other
-				if (data[2]!=" Card" && data[2]!=" Other") {
+				if (!data[2].contains("Card") && !data[2].contains("Other")) {
 					throw new BadConfigFormatException();
 				}
 			}
@@ -112,9 +63,10 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
+	
 	//load the board
 	public void loadBoardConfig() throws BadConfigFormatException, IOException {
-		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		BoardCell [][] temp = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		int i=0;
 		int j=0;
 		//set is used to make sure there's an equal number of commas on each line (meaning, an equal number of columns)
@@ -150,7 +102,7 @@ public class Board {
 						else cell.setDoor(DoorDirection.NONE);
 					}
 					else cell.setDoor(DoorDirection.NONE);
-					board[i][j] = cell; 
+					temp[i][j] = cell; 
 					j++;
 				}
 				i++;
@@ -162,7 +114,16 @@ public class Board {
 		if (commas.size()>1) {
 			throw new BadConfigFormatException();
 		}
+		numRows = i;
+		numColumns = j;
+		board = new BoardCell[i][j];
+		for (int k = 0; k<i; k++) {
+			for (int l= 0; l<j; l++) {
+				board[k][l] = temp[k][l];
+			}
+		}
 	}
+	
 	//sets the files
 	public void setConfigFiles(String csvFile, String txtFile) {
 		boardConfigFile = csvFile;
@@ -173,14 +134,17 @@ public class Board {
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
+	
 	//gets the numRows
 	public int getNumRows() {
 		return numRows;
 	}
+	
 	//gets the cell at a row and column
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
+	
 	//gets the columns
 	public int getNumColumns() {
 		return numColumns;
@@ -194,35 +158,39 @@ public class Board {
 				Set<BoardCell> temp = new HashSet<BoardCell>();
 				//if statements to check if it's on the edge of the board
 				//also check if tile is a door facing the right way
-				if(!board[i][j].isWalkway() || !board[i][j].isDoorway()) {
-					continue;
-				}
 				if (i<board.length-1) {
-					if(board[i+1][j].getDoorDirection() == DoorDirection.DOWN || 
-					  (board[i+1][j].isWalkway())) {
-						if(board[i][j].getDoorDirection() == DoorDirection.UP ||
-						   board[i][j].getDoorDirection() == DoorDirection.NONE) {
-							temp.add(board[i+1][j]);
-						}
-					}
+					if((board[i+1][j].getDoorDirection() == DoorDirection.UP && board[i][j].isWalkway())|| 
+					  (board[i+1][j].isWalkway() && !(board[i][j]).isRoom())||
+					  (board[i][j].getDoorDirection() == DoorDirection.DOWN && board[i+1][j].isWalkway())) {
+						temp.add(board[i+1][j]);	
+					}		
 				}
+				
 				if (i>0) {
-					if(board[i-1][j].getDoorDirection() == DoorDirection.UP ||
-					  (!board[i-1][j].isDoorway() && !board[i-1][j].isRoom())) {
-						temp.add(board[i-1][j]);
+					if((board[i-1][j].getDoorDirection() == DoorDirection.DOWN && board[i][j].isWalkway()) ||
+					(board[i-1][j].isWalkway()&& !(board[i][j]).isRoom()) ||
+					(board[i][j].getDoorDirection() == DoorDirection.UP && board[i-1][j].isWalkway())){
+						temp.add(board[i-1][j]);	
 					}
+					
 				}
+				
 				if (j<board[i].length-1) {
-					if(board[i][j + 1].getDoorDirection() == DoorDirection.LEFT ||
-					  (!board[i][j + 1].isDoorway() && !board[i][j + 1].isRoom())) {
-						temp.add(board[i][j + 1]);
+					if((board[i][j + 1].getDoorDirection() == DoorDirection.LEFT && board[i][j].isWalkway()) ||
+					(board[i][j+1].isWalkway()&& !(board[i][j]).isRoom())||
+					(board[i][j].getDoorDirection() == DoorDirection.RIGHT && board[i][j+1].isWalkway())) {
+						temp.add(board[i][j+1]);	
 					}
+						
 				}
+				
 				if (j>0) {
-					if(board[i][j-1].getDoorDirection() == DoorDirection.RIGHT ||
-					  (!board[i][j-1].isDoorway() && !board[i][j-1].isRoom())) {
+					if((board[i][j-1].getDoorDirection() == DoorDirection.RIGHT && board[i][j].isWalkway()) ||
+					  (board[i][j-1].isWalkway()&& !(board[i][j]).isRoom()) ||
+					  (board[i][j].getDoorDirection() == DoorDirection.LEFT && board[i][j-1].isWalkway())) {
 						temp.add(board[i][j-1]);
 					}
+							 
 				}
 				//puts into map
 				adjMatrix.put(board[i][j], temp);
@@ -230,16 +198,17 @@ public class Board {
 		}
 	}
 	
-	
 	public Set<BoardCell> getAdjList(int i, int j) {
 		//returns the AdjMatrix at a boardcell
 		BoardCell c = getCellAt(i, j);
 		return adjMatrix.get(c);
 	}
+	
 	public Set<BoardCell> getTargets() {
 		//return target list
 		return targets;
 	}
+	
 	public void calcTargets(int i, int j, int k) {
 		BoardCell startCell = getCellAt(i, j);
 		visited = new HashSet<BoardCell>();
@@ -249,6 +218,7 @@ public class Board {
 		findAllTargets(i, j, k);
 		
 	}
+	
 	private void findAllTargets(int i, int j, int k) {
 		//recursive method used to find all targets given a cell and a number of steps
 		for (BoardCell c : getAdjList(i, j)) {
@@ -260,16 +230,14 @@ public class Board {
 				if (k==1) {
 					targets.add(c);
 				}
+				else if (c.isDoorway()) {
+					targets.add(c);
+				}
 				else {
 					findAllTargets(c.getCol(), c.getRow(), k-1);
-					
 				}
 				visited.remove(c); 
 			}
 		}
-		
-		
 	}
-
-	
 }
