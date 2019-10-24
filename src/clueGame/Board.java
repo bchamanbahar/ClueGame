@@ -159,8 +159,11 @@ public class Board {
 				//if statements to check if it's on the edge of the board
 				//also check if tile is a door facing the right way
 				if (i<board.length-1) {
+					//If the tile below has a door direction up and the tile is a walkway
 					if((board[i+1][j].getDoorDirection() == DoorDirection.UP && board[i][j].isWalkway())|| 
+					//If the tile below is a walkway and is not a room
 					  (board[i+1][j].isWalkway() && !(board[i][j]).isRoom())||
+					// is the tile is a door and the tile below is a walkway
 					  (board[i][j].getDoorDirection() == DoorDirection.DOWN && board[i+1][j].isWalkway())) {
 						temp.add(board[i+1][j]);	
 					}		
