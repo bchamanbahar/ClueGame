@@ -79,24 +79,24 @@ public class Board {
 				j=0;
 				String []data = row.split(",");
 				commas.add(data.length);
-				for (String s : data) {
-					BoardCell cell = new BoardCell(i,j, s.charAt(0));
+				for (String dataString : data) {
+					BoardCell cell = new BoardCell(i,j, dataString.charAt(0));
 					//if the character is not in the legend, throw an exception
-					if (!legend.containsKey(s.charAt(0))) {
-						throw new BadConfigFormatException(s);
+					if (!legend.containsKey(dataString.charAt(0))) {
+						throw new BadConfigFormatException(dataString);
 					}
 					//set door direction if there is a door
-					if (s.length()>1) {
-						if (s.charAt(1)== 'U') {
+					if (dataString.length()>1) {
+						if (dataString.charAt(1)== 'U') {
 							cell.setDoor(DoorDirection.UP);
 						}
-						else if (s.charAt(1)== 'D') {
+						else if (dataString.charAt(1)== 'D') {
 							cell.setDoor(DoorDirection.DOWN);
 						}
-						else if (s.charAt(1)== 'L') {
+						else if (dataString.charAt(1)== 'L') {
 							cell.setDoor(DoorDirection.LEFT);
 						}
-						else if (s.charAt(1)== 'R') {
+						else if (dataString.charAt(1)== 'R') {
 							cell.setDoor(DoorDirection.RIGHT);
 						}
 						else cell.setDoor(DoorDirection.NONE);
