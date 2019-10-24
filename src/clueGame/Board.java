@@ -18,7 +18,7 @@ public class Board {
 	private BoardCell [][] board;
 	private Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targets;
+	private Set<BoardCell> targetsList;
 	private Set<BoardCell> visitedList;
 	private String boardConfigFile;
 	private String roomConfigFile;
@@ -37,7 +37,7 @@ public class Board {
 	//initialize the board
 	public void initialize() throws Exception {
 		visitedList = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
+		targetsList = new HashSet<BoardCell>();
 		loadRoomConfig();
 		loadBoardConfig();
 		calcAdj();
@@ -206,13 +206,13 @@ public class Board {
 	
 	public Set<BoardCell> getTargets() {
 		//return target list
-		return targets;
+		return targetsList;
 	}
 	
 	public void calcTargets(int i, int j, int k) {
 		BoardCell startCell = getCellAt(i, j);
 		visitedList = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
+		targetsList = new HashSet<BoardCell>();
 		visitedList.add(startCell);
 		//call recursive method to calc the targets
 		findAllTargets(i, j, k);
@@ -228,10 +228,10 @@ public class Board {
 			else {
 				visitedList.add(c);
 				if (k==1) {
-					targets.add(c);
+					targetsList.add(c);
 				}
 				else if (c.isDoorway()) {
-					targets.add(c);
+					targetsList.add(c);
 				}
 				else {
 					findAllTargets(c.getCol(), c.getRow(), k-1);
