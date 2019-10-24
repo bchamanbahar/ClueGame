@@ -19,7 +19,7 @@ public class Board {
 	private Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
-	private Set<BoardCell> visited;
+	private Set<BoardCell> visitedList;
 	private String boardConfigFile;
 	private String roomConfigFile;
 	// variable used for singleton pattern
@@ -36,7 +36,7 @@ public class Board {
 	
 	//initialize the board
 	public void initialize() throws Exception {
-		visited = new HashSet<BoardCell>();
+		visitedList = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		loadRoomConfig();
 		loadBoardConfig();
@@ -211,9 +211,9 @@ public class Board {
 	
 	public void calcTargets(int i, int j, int k) {
 		BoardCell startCell = getCellAt(i, j);
-		visited = new HashSet<BoardCell>();
+		visitedList = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		visited.add(startCell);
+		visitedList.add(startCell);
 		//call recursive method to calc the targets
 		findAllTargets(i, j, k);
 		
@@ -222,11 +222,11 @@ public class Board {
 	private void findAllTargets(int i, int j, int k) {
 		//recursive method used to find all targets given a cell and a number of steps
 		for (BoardCell c : getAdjList(i, j)) {
-			if (visited.contains(c)) {
+			if (visitedList.contains(c)) {
 				continue;
 			}
 			else {
-				visited.add(c);
+				visitedList.add(c);
 				if (k==1) {
 					targets.add(c);
 				}
@@ -236,7 +236,7 @@ public class Board {
 				else {
 					findAllTargets(c.getCol(), c.getRow(), k-1);
 				}
-				visited.remove(c); 
+				visitedList.remove(c); 
 			}
 		}
 	}
