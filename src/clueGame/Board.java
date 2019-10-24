@@ -141,8 +141,8 @@ public class Board {
 	}
 	
 	//gets the cell at a row and column
-	public BoardCell getCellAt(int row, int j) {
-		return board[row][j];
+	public BoardCell getCellAt(int row, int col) {
+		return board[row][col];
 	}
 	
 	//gets the columns
@@ -198,9 +198,9 @@ public class Board {
 		}
 	}
 	
-	public Set<BoardCell> getAdjList(int row, int j) {
+	public Set<BoardCell> getAdjList(int row, int col) {
 		//returns the AdjMatrix at a boardcell
-		BoardCell c = getCellAt(row, j);
+		BoardCell c = getCellAt(row, col);
 		return adjMatrix.get(c);
 	}
 	
@@ -209,19 +209,19 @@ public class Board {
 		return targetsList;
 	}
 	
-	public void calcTargets(int row, int j, int numSteps) {
-		BoardCell startCell = getCellAt(row, j);
+	public void calcTargets(int row, int col, int numSteps) {
+		BoardCell startCell = getCellAt(row, col);
 		visitedList = new HashSet<BoardCell>();
 		targetsList = new HashSet<BoardCell>();
 		visitedList.add(startCell);
 		//call recursive method to calc the targets
-		findAllTargets(row, j, numSteps);
+		findAllTargets(row, col, numSteps);
 		
 	}
 	
-	private void findAllTargets(int row, int j, int numSteps) {
+	private void findAllTargets(int row, int col, int numSteps) {
 		//recursive method used to find all targets given a cell and a number of steps
-		for (BoardCell c : getAdjList(row, j)) {
+		for (BoardCell c : getAdjList(row, col)) {
 			if (visitedList.contains(c)) {
 				continue;
 			}
