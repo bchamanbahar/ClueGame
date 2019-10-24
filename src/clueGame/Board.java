@@ -160,15 +160,17 @@ public class Board {
 				//also check if tile is a door facing the right way
 				if (i<board.length-1) {
 					//If the tile below has a door direction up and the tile is a walkway
-					if((board[i+1][j].getDoorDirection() == DoorDirection.UP && board[i][j].isWalkway())|| 
 					//If the tile below is a walkway and is not a room
+					//If the tile is a door and the tile below is a walkway
+					if((board[i+1][j].getDoorDirection() == DoorDirection.UP && board[i][j].isWalkway())|| 
 					  (board[i+1][j].isWalkway() && !(board[i][j]).isRoom())||
-					// is the tile is a door and the tile below is a walkway
 					  (board[i][j].getDoorDirection() == DoorDirection.DOWN && board[i+1][j].isWalkway())) {
 						temp.add(board[i+1][j]);	
 					}		
 				}
-				
+				//If the tile above has a door direction down and the tile is a walkway
+				//If the tile above is a walkway and is not a room
+				//If the tile is a door and the tile above is a walkway
 				if (i>0) {
 					if((board[i-1][j].getDoorDirection() == DoorDirection.DOWN && board[i][j].isWalkway()) ||
 					(board[i-1][j].isWalkway()&& !(board[i][j]).isRoom()) ||
@@ -176,7 +178,9 @@ public class Board {
 						temp.add(board[i-1][j]);	
 					}
 				}
-				
+				//If the tile right has a door direction left and the tile is a walkway
+				//If the tile right is a walkway and is not a room
+				//If the tile is a door and the tile right is a walkway
 				if (j<board[i].length-1) {
 					if((board[i][j + 1].getDoorDirection() == DoorDirection.LEFT && board[i][j].isWalkway()) ||
 					(board[i][j+1].isWalkway()&& !(board[i][j]).isRoom())||
@@ -184,7 +188,9 @@ public class Board {
 						temp.add(board[i][j+1]);	
 					}	
 				}
-				
+				//If the tile left has a door direction right and the tile is a walkway
+				//If the tile left is a walkway and is not a room
+				//If the tile is a door and the tile left is a walkway
 				if (j>0) {
 					if((board[i][j-1].getDoorDirection() == DoorDirection.RIGHT && board[i][j].isWalkway()) ||
 					  (board[i][j-1].isWalkway()&& !(board[i][j]).isRoom()) ||
@@ -192,7 +198,7 @@ public class Board {
 						temp.add(board[i][j-1]);
 					}	 
 				}
-				//puts into map
+				//puts the temporary set of targets into map
 				adjMatrix.put(board[i][j], temp);
 			}
 		}
