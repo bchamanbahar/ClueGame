@@ -209,17 +209,17 @@ public class Board {
 		return targetsList;
 	}
 	
-	public void calcTargets(int i, int j, int k) {
+	public void calcTargets(int i, int j, int numSteps) {
 		BoardCell startCell = getCellAt(i, j);
 		visitedList = new HashSet<BoardCell>();
 		targetsList = new HashSet<BoardCell>();
 		visitedList.add(startCell);
 		//call recursive method to calc the targets
-		findAllTargets(i, j, k);
+		findAllTargets(i, j, numSteps);
 		
 	}
 	
-	private void findAllTargets(int i, int j, int k) {
+	private void findAllTargets(int i, int j, int numSteps) {
 		//recursive method used to find all targets given a cell and a number of steps
 		for (BoardCell c : getAdjList(i, j)) {
 			if (visitedList.contains(c)) {
@@ -227,14 +227,14 @@ public class Board {
 			}
 			else {
 				visitedList.add(c);
-				if (k==1) {
+				if (numSteps==1) {
 					targetsList.add(c);
 				}
 				else if (c.isDoorway()) {
 					targetsList.add(c);
 				}
 				else {
-					findAllTargets(c.getCol(), c.getRow(), k-1);
+					findAllTargets(c.getCol(), c.getRow(), numSteps-1);
 				}
 				visitedList.remove(c); 
 			}
