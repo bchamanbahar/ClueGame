@@ -175,7 +175,6 @@ public class Board {
 					(board[i][j].getDoorDirection() == DoorDirection.UP && board[i-1][j].isWalkway())){
 						temp.add(board[i-1][j]);	
 					}
-					
 				}
 				
 				if (j<board[i].length-1) {
@@ -183,8 +182,7 @@ public class Board {
 					(board[i][j+1].isWalkway()&& !(board[i][j]).isRoom())||
 					(board[i][j].getDoorDirection() == DoorDirection.RIGHT && board[i][j+1].isWalkway())) {
 						temp.add(board[i][j+1]);	
-					}
-						
+					}	
 				}
 				
 				if (j>0) {
@@ -192,8 +190,7 @@ public class Board {
 					  (board[i][j-1].isWalkway()&& !(board[i][j]).isRoom()) ||
 					  (board[i][j].getDoorDirection() == DoorDirection.LEFT && board[i][j-1].isWalkway())) {
 						temp.add(board[i][j-1]);
-					}
-							 
+					}	 
 				}
 				//puts into map
 				adjMatrix.put(board[i][j], temp);
@@ -219,7 +216,6 @@ public class Board {
 		visitedList.add(startCell);
 		//call recursive method to calc the targets
 		findAllTargets(row, col, numSteps);
-		
 	}
 	
 	private void findAllTargets(int row, int col, int numSteps) {
