@@ -1,3 +1,81 @@
+commit 13438ccab90063dc4de47348f717f23f8c3f89cc
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 12:00:28 2019 -0600
+
+    9th: added more comments
+
+commit b7c018cff657c40b740b214b9d1244fc6d22bf31
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:56:13 2019 -0600
+
+    8th: removed unnecesary white space
+
+commit b8f6f0cd8b9677b8227c88782a6fe8bb1c28a108
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:54:34 2019 -0600
+
+    7th: added comment in calcAdj explaining long if statement
+
+commit 8af3f290fb8244b0a274f269186a86174628aa67
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:49:42 2019 -0600
+
+    6th: changed variable j to col
+
+commit efcd3061db636b37703c80fac43ee845d1bf7e39
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:48:24 2019 -0600
+
+    Fifth: Changed variable i to row
+
+commit 4e90483d3e6e6dd767cde5d241fbc49eeb549c54
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:46:36 2019 -0600
+
+    Fourth: Changed variable k to numSteps
+
+commit 7b8a65e8cffa00e276f4a8e39d26556297bbe703
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:42:08 2019 -0600
+
+    Third: changed variable targets to targetsList
+
+commit 462632b824b0274259edd6a59afb95a9bd01aff1
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:41:20 2019 -0600
+
+    Second: Changed variable visited to visitedList
+
+commit fa7de5e65c736834f37981c8cbc88b101ba8824d
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 24 11:39:46 2019 -0600
+
+    First edit: Changed variable string s to dataString
+
+commit 74c9049896b21f9dcf9a719805c9209adbb74735
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 22 23:42:56 2019 -0600
+
+    AdjMatrix and Targets work now
+
+commit 79ce0f35d63ca4df273faf2a0dc9d66bd0df3510
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Tue Oct 22 12:32:51 2019 -0600
+
+    Committing the adjacency calc
+
+commit c0a19678be75dcc2a1cafb2612f612e40e2e1585
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Thu Oct 17 11:24:40 2019 -0600
+
+    Added clueGame package
+
+commit 3218aeadf95cd322a3309440d430abef0d7374de
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Wed Oct 16 17:51:23 2019 -0600
+
+    Created Board class
+
 commit 85bba33a930aa74252a7c517e11c8db14cb07ee7
 Author: miablanchard <mblanchard@mymail.mines.edu>
 Date:   Mon Oct 7 22:00:46 2019 -0600
