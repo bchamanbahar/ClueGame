@@ -4,7 +4,7 @@ B, Ballroom, Card
 R, Billiard Room, Card
 L, Library, Card
 S, Study, Card
-D, Dining room, Card
+D, Dining Room, Card
 O, Lounge, Card
 H, Hall, Card
 X, Closet, Other

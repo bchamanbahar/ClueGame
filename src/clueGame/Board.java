@@ -25,7 +25,9 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String personConfigFile;
+	private String deckConfigFile;
 	private ArrayList<Player> listPeople = new ArrayList<Player>();
+	private ArrayList<Card> deckCards = new ArrayList<Card>();
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -46,6 +48,7 @@ public class Board {
 		loadRoomConfig();
 		loadBoardConfig();
 		loadPersonConfigFile();
+		loadDeckConfigFile();
 		calcAdj();
 	}
 	
@@ -139,6 +142,16 @@ public class Board {
 	//set the file to get the list of people in the game
 	public void setPersonFile(String txtFile) {
 		personConfigFile = txtFile;
+	}
+	
+	//set the file to get the list of cards
+	public void setDeckFile(String txtFile) {
+		deckConfigFile = txtFile;
+	}
+	
+	//load the file to set up the deck of cards
+	public void loadDeckConfigFile() {
+		
 	}
 	
 	//load the file to set up the people
@@ -301,5 +314,9 @@ public class Board {
 	
 	public ArrayList<Player> getListPeople() {
 		return listPeople;
+	}
+	
+	public ArrayList<Card> getDeckCards(){
+		return deckCards; 
 	}
 }

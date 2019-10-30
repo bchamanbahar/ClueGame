@@ -8,7 +8,19 @@ public class Card {
 		return false;
 	}
 	
+	public void setName(String name) {
+		this.cardName = name;
+	}
+	
+	public void setCardType(CardType type){
+		this.cardType = type;
+	}
+	
 	public String getName() {
 		return this.cardName;
+	}
+	
+	public CardType getCardType() {
+		return cardType;
 	}
 }
