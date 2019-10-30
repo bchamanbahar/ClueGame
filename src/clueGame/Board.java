@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Board {
+	
 	private int numRows;
 	private int numColumns; 
 	public static final int MAX_BOARD_SIZE = 50;
@@ -22,6 +23,9 @@ public class Board {
 	private Set<BoardCell> visitedList;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String personConfigFile;
+	private ArrayList<Player> listPeople;
+	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -40,6 +44,7 @@ public class Board {
 		targetsList = new HashSet<BoardCell>();
 		loadRoomConfig();
 		loadBoardConfig();
+		loadPersonConfigFile();
 		calcAdj();
 	}
 	
@@ -128,6 +133,16 @@ public class Board {
 	public void setConfigFiles(String csvFile, String txtFile) {
 		boardConfigFile = csvFile;
 		roomConfigFile = txtFile;
+	}
+	
+	//set the file to get the list of people in the game
+	public void setPersonFile(String txtFile) {
+		personConfigFile = txtFile;
+	}
+	
+	//load the file to set up the people
+	public void loadPersonConfigFile() throws IOException {
+		
 	}
 	
 	//gets the legend
@@ -244,5 +259,9 @@ public class Board {
 				visitedList.remove(c); 
 			}
 		}
+	}
+	
+	public ArrayList<Player> getListPeople() {
+		return listPeople;
 	}
 }
