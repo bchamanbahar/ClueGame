@@ -150,8 +150,34 @@ public class Board {
 	}
 	
 	//load the file to set up the deck of cards
-	public void loadDeckConfigFile() {
-		
+	public void loadDeckConfigFile() throws IOException {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(deckConfigFile));
+			String row;
+			while ((row = br.readLine())!=null) {
+				String [] data = row.split(",");
+				if (data[0].equals("Room")) {
+					Card c = new Card();
+					c.setCardType(CardType.ROOM);
+					c.setName(data[1].substring(1));
+					deckCards.add(c);
+				}
+				else if (data[0].equals("Weapon")) {
+					Card c = new Card();
+					c.setCardType(CardType.WEAPON);
+					c.setName(data[1].substring(1));
+					deckCards.add(c);
+				}
+				else {
+					Card c = new Card();
+					c.setCardType(CardType.PERSON);
+					c.setName(data[1].substring(1));
+					deckCards.add(c);
+				}			
+			}
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
 	}
 	
 	//load the file to set up the people
