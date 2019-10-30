@@ -2,12 +2,14 @@ package clueGame;
 import java.awt.Color; // BE SURE TO USE THIS IMPORT
 //not the one Eclipse suggests
 import java.lang.reflect.Field;
+import java.util.*;
 public class Player {
 	
 	private String playerName;
 	private int row;
 	private int column; 
 	private Color color; 
+	private ArrayList<Card> listOfCards = new ArrayList<Card>();
 	
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
@@ -55,6 +57,14 @@ public class Player {
 	
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public void setListOfCards(ArrayList<Card> cards) {
+		this.listOfCards = cards;
+	}
+	
+	public ArrayList<Card> getListOfCards(){
+		return this.listOfCards;
 	}
 	
 }

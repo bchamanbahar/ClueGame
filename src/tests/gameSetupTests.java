@@ -3,6 +3,9 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
@@ -94,5 +97,29 @@ class gameSetupTests {
 		c.setCardType(CardType.ROOM);
 		c.setName("Kitchen");
 		assertTrue(board.getDeckCards().contains(c));
+	}
+	
+	@Test
+	void testDealingCards() {
+		board.dealCards();
+		//checks that the deck is empty after dealing cards. Ensures that all cards have been dealt.
+		assertEquals(0, board.getDeckCards().size());
+		//Hash set for storing the number of cards each person has
+		Set numCards = new HashSet();
+		for (Player p : board.getListPeople()) {
+			numCards.add(p.getListOfCards().size());
+		}
+		//The number of cards a person has should only be, at most, a difference of 1. This checks to make sure that all players have about the same number of cards. The set should not have more than 2 elements in it.
+		assertTrue(numCards.size()<=2);
+		//creates a set and an arraylist of the cards each player has. If there is a difference in size of the list, that means there was probably a repeat that the hashset deleted. 
+		Set listOfCards = new HashSet();
+		ArrayList<Card> cards = new ArrayList<Card>();
+		for (Player p : board.getListPeople()) {
+			for (Card c : p.getListOfCards()) {
+				cards.add(c);
+				listOfCards.add(c);
+			}
+		}
+		assertEquals(cards.size(), listOfCards.size());
 	}
 }

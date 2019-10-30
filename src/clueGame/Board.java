@@ -209,6 +209,10 @@ public class Board {
 		}
 	}
 	
+	public void dealCards() {
+		
+	}
+	
 	//converts string to color
 	public Color convertColor(String strColor) {
 		 Color color;
