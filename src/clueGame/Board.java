@@ -5,11 +5,12 @@
  */
 package clueGame;
 import java.util.*;
-
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class Board {
 	
@@ -24,7 +25,7 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String personConfigFile;
-	private ArrayList<Player> listPeople;
+	private ArrayList<Player> listPeople = new ArrayList<Player>();
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -142,7 +143,44 @@ public class Board {
 	
 	//load the file to set up the people
 	public void loadPersonConfigFile() throws IOException {
-		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(personConfigFile));
+			String row;
+			while ((row = br.readLine())!=null) {
+				String [] data = row.split(",");
+				if (data[0].equals("Human")) {
+					HumanPlayer human = new HumanPlayer();
+					human.setPlayerName(data[1].substring(1));
+					human.setColor(convertColor(data[2].substring(1)));
+					human.setRow(Integer.parseInt(data[3].substring(1)));
+					human.setCol(Integer.parseInt(data[4].substring(1)));
+					listPeople.add(human);
+				}
+				else {
+					ComputerPlayer computer = new ComputerPlayer();
+					computer.setPlayerName(data[1].substring(1));
+					computer.setColor(convertColor(data[2].substring(1)));
+					computer.setRow(Integer.parseInt(data[3].substring(1)));
+					computer.setCol(Integer.parseInt(data[4].substring(1)));
+					listPeople.add(computer);
+				}			
+			}
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+	
+	//converts string to color
+	public Color convertColor(String strColor) {
+		 Color color;
+		 try {
+		 // We can use reflection to convert the string to a color
+		 Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+		 color = (Color)field.get(null);
+		 } catch (Exception e) {
+		 color = null; // Not defined
+		 }
+		 return color;
 	}
 	
 	//gets the legend

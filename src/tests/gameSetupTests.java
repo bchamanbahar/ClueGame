@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Color;
 
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
@@ -15,7 +16,7 @@ import clueGame.Player;
 class gameSetupTests {
 	private static Board board;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setUp() throws Exception {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();

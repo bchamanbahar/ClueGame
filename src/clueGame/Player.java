@@ -1,5 +1,5 @@
 package clueGame;
-import java.awt.*; // BE SURE TO USE THIS IMPORT
+import java.awt.Color; // BE SURE TO USE THIS IMPORT
 //not the one Eclipse suggests
 import java.lang.reflect.Field;
 public class Player {
@@ -23,7 +23,7 @@ public class Player {
 		 color = null; // Not defined
 		 }
 		 return color;
-		}
+	}
 	
 	public Color getColor() {
 		return color;
