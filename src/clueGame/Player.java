@@ -27,44 +27,59 @@ public class Player {
 		 return color;
 	}
 	
+	//gets color
 	public Color getColor() {
 		return color;
 	}
 	
+	//gets row
 	public int getRow() {
 		return row;
 	}
 	
+	//gets column
 	public int getCol() {
 		return column;
 	} 
 	
+	//gets player name
 	public String getPlayerName() {
 		return playerName;
 	}
 	
+	//sets player name
 	public void setPlayerName(String name) {
 		this.playerName = name;
 	}
 	
+	//sets row
 	public void setRow(int row) {
 		this.row = row;
 	}
 	 
+	//sets column
 	public void setCol(int column) {
 		this.column = column;
 	}
 	
+	//sets color
 	public void setColor(Color color) {
 		this.color = color;
 	}
 	
+	//sets the list of cards
 	public void setListOfCards(ArrayList<Card> cards) {
 		this.listOfCards = cards;
 	}
 	
+	//gets the list of cards each player has
 	public ArrayList<Card> getListOfCards(){
 		return this.listOfCards;
+	}
+	
+	//gives a card to a player
+	public void addACard(Card c) {
+		this.listOfCards.add(c);
 	}
 	
 }

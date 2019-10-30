@@ -35,22 +35,22 @@ class gameSetupTests {
 	
 	@Test
 	void testLoadingPeople() {
-		//test names
+		//test names for 1st, 3rd, and 6th card. 
 		assertEquals("Miss Scarlett", board.getListPeople().get(0).getPlayerName());
 		assertEquals("Colonel Mustard", board.getListPeople().get(2).getPlayerName());
 		assertEquals("Mrs. White", board.getListPeople().get(5).getPlayerName());
 		
-		//test colors
+		//test colors for 1st, 3rd, and 6th card. 
 		assertEquals(Color.RED, board.getListPeople().get(0).getColor());
 		assertEquals(Color.YELLOW, board.getListPeople().get(2).getColor());
 		assertEquals(Color.WHITE, board.getListPeople().get(5).getColor());
 		
-		//test if player is human or computer
+		//test if player is human or computer. The 1st card is human. The 3rd and 6th are computers.
 		assertTrue(board.getListPeople().get(0) instanceof HumanPlayer);
 		assertTrue(board.getListPeople().get(2) instanceof ComputerPlayer);
 		assertTrue(board.getListPeople().get(5) instanceof ComputerPlayer);
 		
-		//test starting location
+		//test starting location for 1st, 3rd, and 6th card. 
 		assertEquals(19, board.getListPeople().get(0).getRow());
 		assertEquals(6, board.getListPeople().get(0).getCol());
 		
@@ -109,9 +109,9 @@ class gameSetupTests {
 		for (Player p : board.getListPeople()) {
 			numCards.add(p.getListOfCards().size());
 		}
-		//The number of cards a person has should only be, at most, a difference of 1. This checks to make sure that all players have about the same number of cards. The set should not have more than 2 elements in it.
+		//The number of cards a person has should only be, at most, a difference of 1. This means there's only 2 possible number of cards a player could have. This checks to make sure that all players have about the same number of cards. The set should not have more than 2 elements in it.
 		assertTrue(numCards.size()<=2);
-		//creates a set and an arraylist of the cards each player has. If there is a difference in size of the list, that means there was probably a repeat that the hashset deleted. 
+		//creates a set and an arraylist of the cards each player has. If there is a difference in size of the lists, that means there was probably a repeat that the hashset deleted. The arraylist and the set SHOULD be the same size if there are no repeats.
 		Set listOfCards = new HashSet();
 		ArrayList<Card> cards = new ArrayList<Card>();
 		for (Player p : board.getListPeople()) {

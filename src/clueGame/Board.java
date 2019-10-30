@@ -156,22 +156,26 @@ public class Board {
 			String row;
 			while ((row = br.readLine())!=null) {
 				String [] data = row.split(",");
+				//checks if the card is a room, weapon, or person
 				if (data[0].equals("Room")) {
 					Card c = new Card();
 					c.setCardType(CardType.ROOM);
 					c.setName(data[1].substring(1));
+					//add card to deck
 					deckCards.add(c);
 				}
 				else if (data[0].equals("Weapon")) {
 					Card c = new Card();
 					c.setCardType(CardType.WEAPON);
 					c.setName(data[1].substring(1));
+					//add card to deck
 					deckCards.add(c);
 				}
 				else {
 					Card c = new Card();
 					c.setCardType(CardType.PERSON);
 					c.setName(data[1].substring(1));
+					//add card to deck
 					deckCards.add(c);
 				}			
 			}
@@ -187,20 +191,25 @@ public class Board {
 			String row;
 			while ((row = br.readLine())!=null) {
 				String [] data = row.split(",");
+				//checks if the player is a human or a computer
 				if (data[0].equals("Human")) {
 					HumanPlayer human = new HumanPlayer();
+					//set player info
 					human.setPlayerName(data[1].substring(1));
 					human.setColor(convertColor(data[2].substring(1)));
 					human.setRow(Integer.parseInt(data[3].substring(1)));
 					human.setCol(Integer.parseInt(data[4].substring(1)));
+					//add to list of people
 					listPeople.add(human);
 				}
 				else {
 					ComputerPlayer computer = new ComputerPlayer();
+					//set player info
 					computer.setPlayerName(data[1].substring(1));
 					computer.setColor(convertColor(data[2].substring(1)));
 					computer.setRow(Integer.parseInt(data[3].substring(1)));
 					computer.setCol(Integer.parseInt(data[4].substring(1)));
+					//add to list of people
 					listPeople.add(computer);
 				}			
 			}
@@ -210,7 +219,23 @@ public class Board {
 	}
 	
 	public void dealCards() {
-		
+		//shuffle deck
+		Collections.shuffle(deckCards, new Random());
+		//counts which player we're dealing to
+		int counter = 0;
+		//iterator to go over the deck, so we can remove cards as we go
+		Iterator<Card> it = deckCards.iterator();
+		while (it.hasNext()) {
+			//gives a card to a player
+			getListPeople().get(counter).addACard(it.next());
+			counter++;
+			//if we've reached the last player, loop back to the first player
+			if (counter>=getListPeople().size()) {
+				counter = 0;
+			}
+			//remove card from deck
+			it.remove();
+		}
 	}
 	
 	//converts string to color
@@ -246,6 +271,7 @@ public class Board {
 		return numColumns;
 	}
 	
+	//calculates the adjacencies
 	public void calcAdj() {
 		//create AdjMatrix
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
@@ -342,10 +368,12 @@ public class Board {
 		}
 	}
 	
+	//gets the list of people
 	public ArrayList<Player> getListPeople() {
 		return listPeople;
 	}
 	
+	//gets the deck of cards
 	public ArrayList<Card> getDeckCards(){
 		return deckCards; 
 	}

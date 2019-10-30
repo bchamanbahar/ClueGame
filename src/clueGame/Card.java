@@ -4,8 +4,10 @@ public class Card {
 	private String cardName;
 	private CardType cardType;
 	
+	//equals method for cards
 	@Override
 	public boolean equals(Object o) {
+		//compares name and type of card
 		if (this.cardName.equals(((Card) o).getName()) && this.cardType.equals(((Card) o).getCardType())){
 			return true;
 		}
@@ -17,18 +19,22 @@ public class Card {
 		return cardName.hashCode();
 	}
 	
+	//set card name
 	public void setName(String name) {
 		this.cardName = name;
 	}
 	
+	//set card type
 	public void setCardType(CardType type){
 		this.cardType = type;
 	}
 	
+	//get name of card
 	public String getName() {
 		return this.cardName;
 	}
 	
+	//get card type
 	public CardType getCardType() {
 		return this.cardType;
 	}
