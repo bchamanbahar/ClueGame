@@ -1,0 +1,21 @@
+Room, Kitchen
+Room, Ballroom
+Room, Conservatory
+Room, Dining Room
+Room, Lounge
+Room, Hall
+Room, Study
+Room, Library
+Room, Billiard Room
+Weapon, Candlestick
+Weapon, Dagger
+Weapon, Lead Pipe
+Weapon, Revolver
+Weapon, Rope
+Weapon, Spanner
+Person, Miss Scarlett
+Person, Mr. Green
+Person, Colonel Mustard
+Person, Professor Plum
+Person, Mrs. Peacock
+Person, Mrs. White
