@@ -49,7 +49,7 @@ private static Board board;
 		}
 		//they can only move to 2 possible locations, so we will test that we have visited both
 		BoardCell possibleLocation1 = new BoardCell(12, 2);
-		BoardCell possibleLocation2 = new BoardCell(13, 1);
+		BoardCell possibleLocation2 = new BoardCell(11, 1);
 		//counters to try to see if we're visiting somewhat equally
 		int counterLocation1 = 0;
 		int counterLocation2 = 0;
@@ -69,27 +69,29 @@ private static Board board;
 		//TESTS FOR MOVING TO A DOOR IF WE DIDN'T JUST VISIT IT
 		
 		//change player location so they're near a door
-		testPlayer.setRow(14);
-		testPlayer.setCol(4);
+		testPlayer.setRow(4);
+		testPlayer.setCol(14);
 		//calculate targets with movement of 1
 		board.calcTargets(testPlayer.getRow(), testPlayer.getCol(), 1);
+		targets.clear();
 		targets = board.getTargets();
 		//have computer pick a location
 		BoardCell pickedLocation = testPlayer.pickLocation(targets);
-		//since there is a door, we should have picked location [14][3]
-		BoardCell goHere =  new BoardCell(14, 3);
+		//since there is a door, we should have picked location [3][14]
+		BoardCell goHere =  new BoardCell(3, 14);
 		//check to see if we went to the door
 		assertEquals(pickedLocation, goHere);
 		
 		//TESTS IF WE JUST VISITED THE DOOR (ALSO SELECTING RANDOMLY)
 		
-		//move back to [14][4]
-		testPlayer.setRow(14);
-		testPlayer.setCol(4);
+		//move back to [4][14]
+		testPlayer.setRow(4);
+		testPlayer.setCol(14);
 		//calculate targets
 		board.calcTargets(testPlayer.getRow(), testPlayer.getCol(), 1);
+		targets.clear();
 		targets = board.getTargets();
-		//since we just visited the door at [14][3], we should be choosing a tile randomly now
+		//since we just visited the door at [3][14], we should be choosing a tile randomly now
 		locations.clear();
 		//choose a location randomly 100 times
 		for (int i = 0 ; i<100 ; i++) {
@@ -97,12 +99,10 @@ private static Board board;
 			locations.add(testPlayer.pickLocation(targets));
 		}
 		//setting up boardcells for the possible locations the computer could have visited
-		possibleLocation1.setRow(14);
-		possibleLocation1.setCol(3);
-		possibleLocation2.setRow(14);
-		possibleLocation2.setCol(5);
-		BoardCell possibleLocation3 = new BoardCell(15, 4);
-		BoardCell possibleLocation4 = new BoardCell(13, 4);
+		possibleLocation1 = new BoardCell(3, 14);
+		possibleLocation2 = new BoardCell(5, 14);
+		BoardCell possibleLocation3 = new BoardCell(4, 15);
+		BoardCell possibleLocation4 = new BoardCell(4, 13);
 		//set counters for each location to 0
 		counterLocation1 = 0;
 		counterLocation2 = 0;
