@@ -332,6 +332,8 @@ class playerInteractionTests {
 
 	@Test
 	void testHandleSuggestion() {
+		// TEST NO ONE CAN DISPROVE
+
 		// grab human player
 		HumanPlayer humanPlayer1 = (HumanPlayer) board.getListPeople().get(0);
 		// grab the computer players
@@ -340,62 +342,71 @@ class playerInteractionTests {
 		ComputerPlayer computerPlayer3 = (ComputerPlayer) board.getListPeople().get(3);
 		ComputerPlayer computerPlayer4 = (ComputerPlayer) board.getListPeople().get(4);
 		ComputerPlayer computerPlayer5 = (ComputerPlayer) board.getListPeople().get(5);
-		ArrayList<Card> knownCards = new ArrayList<Card>();
+		ArrayList<Card> knownCardsNone = new ArrayList<Card>();
 		// set known cards to nothing (no one has any cards)
-		humanPlayer1.setListOfCards(knownCards);
-		computerPlayer1.setListOfCards(knownCards);
-		computerPlayer2.setListOfCards(knownCards);
-		computerPlayer3.setListOfCards(knownCards);
-		computerPlayer4.setListOfCards(knownCards);
-		computerPlayer5.setListOfCards(knownCards);
+		humanPlayer1.setListOfCards(knownCardsNone);
+		computerPlayer1.setListOfCards(knownCardsNone);
+		computerPlayer2.setListOfCards(knownCardsNone);
+		computerPlayer3.setListOfCards(knownCardsNone);
+		computerPlayer4.setListOfCards(knownCardsNone);
+		computerPlayer5.setListOfCards(knownCardsNone);
 		// test suggestion will use miss scarlett, kitchen, and candlestick
 		Solution testSuggestion = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
 		// since no one has a card, must return null
 		assertNull(board.handleSuggestion(testSuggestion, humanPlayer1));
 
+		// TEST ONLY ACCUSING PLAYER CAN DISPROVE
+
 		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
-		knownCards.add(missScarlett);
+		ArrayList<Card> knownCardsScarlett = new ArrayList<Card>();
+		knownCardsScarlett.add(missScarlett);
 		// give computer player 1 a miss scarlett card
-		computerPlayer1.setListOfCards(knownCards);
+		computerPlayer1.setListOfCards(knownCardsScarlett);
 		// since computer player 1 is the one asking the suggestion, and they already
 		// have the miss scarlett card, it must return null
 		assertNull(board.handleSuggestion(testSuggestion, computerPlayer1));
 
-		knownCards.clear();
+		// TEST ONLY HUMAN CAN DISPROVE
+
 		// take away computer player 1's miss scarlett card
-		computerPlayer1.setListOfCards(knownCards);
-		knownCards.add(missScarlett);
+		computerPlayer1.setListOfCards(knownCardsNone);
 		// give human the miss scarlett card
-		humanPlayer1.setListOfCards(knownCards);
+		humanPlayer1.setListOfCards(knownCardsScarlett);
 		// since the computer is asking for miss scarlett, and the human player has it,
 		// the player must return the miss scarlett card.
 		assertEquals(missScarlett, board.handleSuggestion(testSuggestion, computerPlayer1));
+
+		// TEST ONLY HUMAN CAN DISPROVE, BUT HUMAN IS ACCUSER
 
 		// since the human is asking for miss scarlett, and they already have the card,
 		// must return null
 		assertNull(board.handleSuggestion(testSuggestion, humanPlayer1));
 
+		// TEST THAT TWO PLAYERS CAN DISPROVE, CHOOSE CORRECT PLAYER
+
 		// give miss scarlett card to computer 1
-		computerPlayer1.setListOfCards(knownCards);
-		knownCards.clear();
+		computerPlayer1.setListOfCards(knownCardsScarlett);
 		// take away miss scarlett from human
-		humanPlayer1.setListOfCards(knownCards);
+		humanPlayer1.setListOfCards(knownCardsNone);
 		Card kitchen = new Card("Kitchen", CardType.ROOM);
-		knownCards.add(kitchen);
+		ArrayList<Card> knownCardsKitchen = new ArrayList<Card>();
+		knownCardsKitchen.add(kitchen);
 		// give kitchen card to computer 2
-		computerPlayer2.setListOfCards(knownCards);
+		computerPlayer2.setListOfCards(knownCardsKitchen);
 		// since computer 1 comes before computer 2 in the list, the miss scarlett card
-		// will be returned (NOT the kitchen card)
+		// will be returned (NOT the kitchen card, because computer 2 is not next)
 		assertEquals(missScarlett, board.handleSuggestion(testSuggestion, humanPlayer1));
 
+		// TEST THAT HUMAN AND ANOTHER PLAYER CAN DISPROVE, BUT THE OTHER PLAYER IS NEXT
+		// IN THE LIST
+
 		// take away miss scarlett from computer 1
-		knownCards.clear();
-		computerPlayer1.setListOfCards(knownCards);
+		computerPlayer1.setListOfCards(knownCardsNone);
 		// give miss scarlett to human
-		knownCards.add(missScarlett);
-		humanPlayer1.setListOfCards(knownCards);
+		humanPlayer1.setListOfCards(knownCardsScarlett);
 		// computer player 1 will ask for miss scarlett, kitchen, and candlestick. since
 		// computer player 2 is next in the list, the kitchen card will be returned.
+		// (NOT the miss scarlett card, because the human is not next in the list)
 		assertEquals(kitchen, board.handleSuggestion(testSuggestion, computerPlayer1));
 
 	}
