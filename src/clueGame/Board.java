@@ -377,4 +377,6 @@ public class Board {
 	public ArrayList<Card> getDeckCards(){
 		return deckCards; 
 	}
+	
+	
 }

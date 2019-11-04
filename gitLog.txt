@@ -1,3 +1,51 @@
+commit 3a0ff0891043b0923755a1495212b4d231947cca
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Thu Oct 31 12:15:47 2019 -0600
+
+    Adding player tests
+
+commit bde7cadf8cf771095ea3dde49b4eb242e81c4c85
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 20:35:55 2019 -0600
+
+    Dealing the cards passes all the tests
+
+commit 8c19e1d37c06623ba12f7c3c747d2126876a3f9d
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 20:11:52 2019 -0600
+
+    Added tests for dealing cards
+
+commit 39f4f5fbaf5864f6f0aa7d21e61ddfd01a975896
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 19:37:48 2019 -0600
+
+    The deck tests pass now
+
+commit 9d24bee6a530dc02f1e02538c87fad73f01ac8bb
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 19:15:35 2019 -0600
+
+    Added tests for loading the deck
+
+commit 4f8d7f4e8659669625ca2b82285910619d59d6c1
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 18:48:49 2019 -0600
+
+    Loading people tests pass now
+
+commit 8c3b01509e228d02b02217d3150ee4bbdde7fdda
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Oct 29 18:11:31 2019 -0600
+
+    Added tests for loading people
+
+commit 73631b82ac37df32073ba6db774b292894f8f12b
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Tue Oct 29 16:04:51 2019 -0600
+
+    Committing the log
+
 commit 13438ccab90063dc4de47348f717f23f8c3f89cc
 Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
 Date:   Thu Oct 24 12:00:28 2019 -0600

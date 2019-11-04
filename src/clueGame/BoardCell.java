@@ -22,6 +22,16 @@ public BoardCell(int col, int row) {
 	this.row = row;		
 }
 
+//equals method for BoardCells
+@Override
+public boolean equals(Object o) {
+	//compares columns and rows
+	if (this.col == (((BoardCell) o).getCol()) && this.row == (((BoardCell) o).getRow())){
+		return true;
+	}
+	else return false;
+}
+
 public int getCol() {
 	return col;
 }
