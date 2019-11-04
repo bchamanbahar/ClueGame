@@ -4,6 +4,15 @@ public class Card {
 	private String cardName;
 	private CardType cardType;
 	
+	public Card() {
+		
+	}
+	
+	public Card(String name, CardType type) {
+		cardName = name; 
+		cardType = type;
+	}
+	
 	//equals method for cards
 	@Override
 	public boolean equals(Object o) {

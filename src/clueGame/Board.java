@@ -326,6 +326,10 @@ public class Board {
 		}
 	}
 	
+	public boolean checkAccusation(Solution accusation) {
+		return false;
+	}
+	
 	public Set<BoardCell> getAdjList(int row, int col) {
 		//returns the AdjMatrix at a boardcell
 		BoardCell c = getCellAt(row, col);

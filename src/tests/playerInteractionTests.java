@@ -2,6 +2,10 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +21,7 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Solution;
 
 class playerInteractionTests {
 private static Board board;
@@ -109,6 +114,7 @@ private static Board board;
 		int counterLocation3 = 0;
 		int counterLocation4 = 0;
 		for (BoardCell c: locations) {
+			//check if they are in the list of locations
 			if (c.equals(possibleLocation1)) {
 				counterLocation1++;
 			}
@@ -128,7 +134,88 @@ private static Board board;
 		assertTrue(counterLocation3>5);
 		assertTrue(counterLocation4>5);
 		
-		
 	}
-
+	
+	@Test
+	void testMakingAccusations() {
+		Solution testSolution = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
+		//grab the first computer player
+		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
+		ArrayList<Card> deckCards = new ArrayList<Card>();
+		BufferedReader br = new BufferedReader(new FileReader("deck.txt"));
+		String row;
+		try {
+			while ((row = br.readLine())!=null) {
+				String [] data = row.split(",");
+				//checks if the card is a room, weapon, or person
+				if (data[0].equals("Room")) {
+					Card c = new Card();
+					c.setCardType(CardType.ROOM);
+					c.setName(data[1].substring(1));
+					//add card to deck
+					deckCards.add(c);
+				}
+				else if (data[0].equals("Weapon")) {
+					Card c = new Card();
+					c.setCardType(CardType.WEAPON);
+					c.setName(data[1].substring(1));
+					//add card to deck
+					deckCards.add(c);
+				}
+				else {
+					Card c = new Card();
+					c.setCardType(CardType.PERSON);
+					c.setName(data[1].substring(1));
+					//add card to deck
+					deckCards.add(c);
+				}			
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
+		Card kitchen = new Card("Kitchen", CardType.ROOM);
+		Card candleStick = new Card("Candlestick", CardType.WEAPON);
+		ArrayList<Card> deckForCorrectSolution = new ArrayList<Card>();
+		for (Card c : deckCards) {
+			if (!c.equals(missScarlett) && !c.equals(kitchen) && !c.equals(candleStick)) {
+				deckForCorrectSolution.add(c);
+			}
+		}
+		testPlayer.setKnownCards(deckForCorrectSolution);
+		assertEquals(testPlayer.makeAccusation(), testSolution);
+		
+		ArrayList<Card> deckForWrongPerson = new ArrayList<Card>();
+		Card mrGreen = new Card("Mr. Green", CardType.PERSON);
+		for (Card c : deckCards) {
+			if (!c.equals(mrGreen) && !c.equals(kitchen) && !c.equals(candleStick)) {
+				deckForWrongPerson.add(c);
+			}
+		}
+		testPlayer.setKnownCards(deckForWrongPerson);
+		assertNotEquals(testPlayer.makeAccusation(), testSolution);
+		
+		ArrayList<Card> deckForWrongRoom = new ArrayList<Card>();
+		Card ballroom = new Card("Ballroom", CardType.ROOM);
+		for (Card c : deckCards) {
+			if (!c.equals(missScarlett) && !c.equals(ballroom) && !c.equals(candleStick)) {
+				deckForWrongRoom.add(c);
+			}
+		}
+		testPlayer.setKnownCards(deckForWrongRoom);
+		assertNotEquals(testPlayer.makeAccusation(), testSolution);
+		
+		ArrayList<Card> deckForWrongWeapon = new ArrayList<Card>();
+		Card dagger = new Card("Dagger", CardType.WEAPON);
+		for (Card c : deckCards) {
+			if (!c.equals(missScarlett) && !c.equals(kitchen) && !c.equals(dagger)) {
+				deckForWrongWeapon.add(c);
+			}
+		}
+		testPlayer.setKnownCards(deckForWrongWeapon);
+		assertNotEquals(testPlayer.makeAccusation(), testSolution);
+		
+}
+	
 }

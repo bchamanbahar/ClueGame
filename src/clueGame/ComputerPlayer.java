@@ -5,6 +5,7 @@ import java.util.*;
 
 public class ComputerPlayer extends Player {
 	private ArrayList<BoardCell> previousLocations = new ArrayList<BoardCell>();
+	private ArrayList<Card> knownCards = new ArrayList<Card>();
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		for (BoardCell c : targets) {
@@ -40,10 +41,16 @@ public class ComputerPlayer extends Player {
 		return false;
 	}
 
-	public void makeAccusation() {
+	public Solution makeAccusation() {
+		return null;
+	}
+	
+	public void createSuggestion() {
 		
 	}
-	public void createSuggestion() {
+	
+	public void setKnownCards(ArrayList<Card> cards) {
+		knownCards = cards;
 		
 	}
 }
