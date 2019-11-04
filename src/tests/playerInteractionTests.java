@@ -139,52 +139,130 @@ class playerInteractionTests {
 
 	@Test
 	void testMakingAccusations() throws IOException {
+		// this is the solution we will be testing against
 		Solution testSolution = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
 		// grab the first computer player
 		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
+
+		// TESTS FOR CORRECT SOLUTION
+
 		ArrayList<Card> deckCards = board.getDeck();
+		// create cards for miss scarlett, kitchen, and candlestick so we can remove
+		// them from the deck (since they're the killers)
 		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
 		Card kitchen = new Card("Kitchen", CardType.ROOM);
 		Card candleStick = new Card("Candlestick", CardType.WEAPON);
 		ArrayList<Card> deckForCorrectSolution = new ArrayList<Card>();
 		for (Card c : deckCards) {
+			// remove miss scarlett, kitchen, and candlestick from deck
 			if (!c.equals(missScarlett) && !c.equals(kitchen) && !c.equals(candleStick)) {
 				deckForCorrectSolution.add(c);
 			}
 		}
+		// set the cards the players knows to everything except the solution ones. This
+		// will force the computer to give the right answer.
 		testPlayer.setKnownCards(deckForCorrectSolution);
 		assertEquals(testPlayer.makeAccusation(), testSolution);
 
+		// TESTS FOR WRONG PERSON
+
 		ArrayList<Card> deckForWrongPerson = new ArrayList<Card>();
+		// now, we will remove everything from the deck except mr green, kitchen, and
+		// candlestick.
 		Card mrGreen = new Card("Mr. Green", CardType.PERSON);
 		for (Card c : deckCards) {
+			// remove mr green, kitchen, and candlestick from deck
 			if (!c.equals(mrGreen) && !c.equals(kitchen) && !c.equals(candleStick)) {
 				deckForWrongPerson.add(c);
 			}
 		}
+		// set the cards the players knows to everything except mr green, kitchen, and
+		// candlestick. This will force the computer to give the wrong answer because
+		// the person card is wrong.
 		testPlayer.setKnownCards(deckForWrongPerson);
 		assertNotEquals(testPlayer.makeAccusation(), testSolution);
 
+		// TESTS FOR WRONG ROOM
+
 		ArrayList<Card> deckForWrongRoom = new ArrayList<Card>();
+		// now, we will remove everything from the deck except miss scarlett, ballroom,
+		// and candlestick.
 		Card ballroom = new Card("Ballroom", CardType.ROOM);
 		for (Card c : deckCards) {
+			// remove miss scarlett, ballroom, and candlestick from deck
 			if (!c.equals(missScarlett) && !c.equals(ballroom) && !c.equals(candleStick)) {
 				deckForWrongRoom.add(c);
 			}
 		}
+		// set the cards the players knows to everything except miss scarlett, ballroom,
+		// and candlestick. This will force the computer to give the wrong answer
+		// because the room card is wrong.
 		testPlayer.setKnownCards(deckForWrongRoom);
 		assertNotEquals(testPlayer.makeAccusation(), testSolution);
 
+		// TESTS FOR WRONG WEAPON
+
 		ArrayList<Card> deckForWrongWeapon = new ArrayList<Card>();
+		// now, we will remove everything from the deck except miss scarlett, kitchen,
+		// and dagger.
 		Card dagger = new Card("Dagger", CardType.WEAPON);
 		for (Card c : deckCards) {
+			// remove miss scarlett, kitchen, and dagger from deck
 			if (!c.equals(missScarlett) && !c.equals(kitchen) && !c.equals(dagger)) {
 				deckForWrongWeapon.add(c);
 			}
 		}
+		// set the cards the players knows to everything except miss scarlett, kitchen,
+		// and dagger. This will force the computer to give the wrong answer because the
+		// weapon card is wrong.
 		testPlayer.setKnownCards(deckForWrongWeapon);
 		assertNotEquals(testPlayer.makeAccusation(), testSolution);
+	}
 
+	@Test
+	void testCreateSuggestion() {
+		// grab the first computer player
+		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
+		// move player to door
+		testPlayer.setRow(3);
+		testPlayer.setCol(14);
+		ArrayList<Solution> suggestions = new ArrayList<Solution>();
+		for (int i = 0; i < 100; i++) {
+			suggestions.add(testPlayer.createSuggestion());
+		}
+		boolean inTheStudy = true;
+		Set<String> listPeople = new HashSet<String>();
+		Set<String> listWeapons = new HashSet<String>();
+		for (Solution s : suggestions) {
+			if (!s.getRoom().equals("Study")) {
+				inTheStudy = false;
+			}
+			listPeople.add(s.getPerson());
+			listWeapons.add(s.getWeapon());
+		}
+		assertTrue(inTheStudy);
+		assertTrue(listPeople.size() == 6);
+		assertTrue(listWeapons.size() == 6);
+		
+		ArrayList<Card> deckCards = board.getDeck();
+		// create cards for miss scarlett and candlestick so we can remove
+		// them from the deck 
+		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
+		Card candleStick = new Card("Candlestick", CardType.WEAPON);
+		ArrayList<Card> deck = new ArrayList<Card>();
+		for (Card c : deckCards) {
+			// remove miss scarlett, kitchen, and candlestick from deck
+			if (!c.equals(missScarlett) && !c.equals(candleStick)) {
+				deck.add(c);
+			}
+		}	
+		testPlayer.setKnownCards(deck);
+		Solution suggestion = new Solution();
+		suggestion = testPlayer.createSuggestion();
+		assertTrue(suggestion.getRoom() == "Study");
+		assertTrue(suggestion.getPerson() == "Miss Scarlett");
+		assertTrue(suggestion.getWeapon() == "Candlestick");
+		
 	}
 
 }

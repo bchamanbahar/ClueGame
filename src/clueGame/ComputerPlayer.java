@@ -107,7 +107,7 @@ public class ComputerPlayer extends Player {
 		return accusation;
 	}
 	
-	public void createSuggestion() {
+	public Solution createSuggestion() {
 		
 	}
 	
