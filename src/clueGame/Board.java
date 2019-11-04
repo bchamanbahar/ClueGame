@@ -28,7 +28,7 @@ public class Board {
 	private String deckConfigFile;
 	private ArrayList<Player> listPeople = new ArrayList<Player>();
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
-	
+	private ArrayList<Card> deck = new ArrayList<Card>();
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -182,6 +182,7 @@ public class Board {
 		} catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
+		deck = deckCards;
 	}
 	
 	//load the file to set up the people
@@ -380,6 +381,10 @@ public class Board {
 	//gets the deck of cards
 	public ArrayList<Card> getDeckCards(){
 		return deckCards; 
+	}
+
+	public ArrayList<Card> getDeck() {
+		return deck;
 	}
 	
 	
