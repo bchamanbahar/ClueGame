@@ -32,6 +32,15 @@ public boolean equals(Object o) {
 	else return false;
 }
 
+
+public void setCol(int col) {
+	this.col = col;
+}
+
+public void setRow(int row) {
+	this.row = row;
+}
+
 public int getCol() {
 	return col;
 }
