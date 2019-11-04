@@ -6,8 +6,8 @@ import java.util.*;
 public class Player {
 	
 	private String playerName;
-	private int row;
-	private int column; 
+	int row;
+	int column; 
 	private Color color; 
 	private ArrayList<Card> listOfCards = new ArrayList<Card>();
 	
@@ -39,7 +39,7 @@ public class Player {
 	
 	//gets column
 	public int getCol() {
-		return column;
+		return getColumn();
 	} 
 	
 	//gets player name
@@ -59,7 +59,7 @@ public class Player {
 	 
 	//sets column
 	public void setCol(int column) {
-		this.column = column;
+		this.setColumn(column);
 	}
 	
 	//sets color
@@ -80,6 +80,14 @@ public class Player {
 	//gives a card to a player
 	public void addACard(Card c) {
 		this.listOfCards.add(c);
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
 	}
 	
 }

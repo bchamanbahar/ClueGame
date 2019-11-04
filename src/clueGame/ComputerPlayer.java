@@ -6,10 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+
 public class ComputerPlayer extends Player {
 	private ArrayList<BoardCell> previousLocations = new ArrayList<BoardCell>();
 	private ArrayList<Card> knownCards = new ArrayList<Card>();
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
+	private static Board board = Board.getInstance();
 	
 	public ComputerPlayer() throws IOException {
 		try {
@@ -108,7 +110,28 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public Solution createSuggestion() {
-		
+		ArrayList<Card> possibleCards = new ArrayList();
+		for (Card c : deckCards) {
+			if (!knownCards.contains(c)) {
+				possibleCards.add(c);
+			}
+		}
+		ArrayList<Card> possiblePeople = new ArrayList();
+		ArrayList<Card> possibleWeapons = new ArrayList();
+		for (Card c : possibleCards) {
+			if (c.getCardType() == CardType.PERSON) {
+				possiblePeople.add(c);
+			}
+			if (c.getCardType() == CardType.WEAPON) {
+				possibleWeapons.add(c);
+			}
+		}
+		int randomPerson = new Random().nextInt(possiblePeople.size());
+		int randomWeapon = new Random().nextInt(possiblePeople.size());
+		BoardCell location = board.getCellAt(row, column);
+		String room = board.legend.get(location.getInitial());
+		Solution accusation = new Solution(possiblePeople.get(randomPerson).getName(), room, possibleWeapons.get(randomWeapon).getName());
+		return accusation;
 	}
 	
 	public void setKnownCards(ArrayList<Card> cards) {

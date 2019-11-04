@@ -18,7 +18,7 @@ public class Board {
 	private int numColumns; 
 	public static final int MAX_BOARD_SIZE = 50;
 	private BoardCell [][] board;
-	private Map<Character, String> legend;
+	Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targetsList;
 	private Set<BoardCell> visitedList;

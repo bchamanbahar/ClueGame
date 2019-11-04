@@ -221,48 +221,69 @@ class playerInteractionTests {
 
 	@Test
 	void testCreateSuggestion() {
+		// TESTS FOR ROOM MATCHING CURRENT LOCATION, MULTIPLE WEAPONS NOT SEEN, AND
+		// MULTIPLE PEOPLE NOT SEEN
+
 		// grab the first computer player
 		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
-		// move player to door
+		// move player to door at the study
 		testPlayer.setRow(3);
 		testPlayer.setCol(14);
+		ArrayList<Card> deck = new ArrayList<Card>();
+		// set known cards to nothing
+		testPlayer.setKnownCards(deck);
 		ArrayList<Solution> suggestions = new ArrayList<Solution>();
+		// create 100 random suggestions
 		for (int i = 0; i < 100; i++) {
 			suggestions.add(testPlayer.createSuggestion());
 		}
 		boolean inTheStudy = true;
+		// create sets to keep track if we've seen each person and weapon at least once
+		// in our suggestions
 		Set<String> listPeople = new HashSet<String>();
 		Set<String> listWeapons = new HashSet<String>();
 		for (Solution s : suggestions) {
+			// if the room is not the study, flag as false
 			if (!s.getRoom().equals("Study")) {
 				inTheStudy = false;
 			}
 			listPeople.add(s.getPerson());
 			listWeapons.add(s.getWeapon());
 		}
+		// check if we're in the study every time
 		assertTrue(inTheStudy);
+		// since there are 6 people as options to choose from, the set should contain 6
+		// people if it selected each one randomly once
 		assertTrue(listPeople.size() == 6);
+		// since there are 6 weapons as options to choose from, the set should contain 6
+		// weapons if it selected each one randomly once
 		assertTrue(listWeapons.size() == 6);
-		
+
+		// TESTS FOR IF ONE WEAPON AND ONE PERSON NOT SEEN, MUST PICK THEM!
+
 		ArrayList<Card> deckCards = board.getDeck();
 		// create cards for miss scarlett and candlestick so we can remove
-		// them from the deck 
+		// them from the deck
 		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
 		Card candleStick = new Card("Candlestick", CardType.WEAPON);
-		ArrayList<Card> deck = new ArrayList<Card>();
 		for (Card c : deckCards) {
-			// remove miss scarlett, kitchen, and candlestick from deck
+			// remove miss scarlett and candlestick from deck
 			if (!c.equals(missScarlett) && !c.equals(candleStick)) {
 				deck.add(c);
 			}
-		}	
+		}
+		// set known cards to everything EXCEPT Miss Scarlett and Candlestick. This
+		// means we've seen every other person and weapon. Thus, the computer must ask
+		// for Miss Scarlett and the Candlestick
 		testPlayer.setKnownCards(deck);
+		// create a suggestion
 		Solution suggestion = new Solution();
 		suggestion = testPlayer.createSuggestion();
-		assertTrue(suggestion.getRoom() == "Study");
-		assertTrue(suggestion.getPerson() == "Miss Scarlett");
-		assertTrue(suggestion.getWeapon() == "Candlestick");
-		
+		// check to see if we picked Study, Miss Scarlett, and Candlestick.
+		assertTrue(suggestion.getRoom().equals("Study"));
+		assertTrue(suggestion.getPerson().equals("Miss Scarlett"));
+		assertTrue(suggestion.getWeapon().equals("Candlestick"));
+
 	}
 
 }
