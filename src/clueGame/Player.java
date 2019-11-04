@@ -16,18 +16,22 @@ public class Player {
 	public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> listOfMatchingCards = new ArrayList<Card>();
 		for (Card c : listOfCards) {
+			//if we have a matching card, add it to our list of matching cards
 			if (c.getName() == suggestion.getPerson() || c.getName() == suggestion.getRoom()
 					|| c.getName() == suggestion.getWeapon()) {
 				listOfMatchingCards.add(c);
 			}
 		}
+		//if we have 1 matching card, return it
 		if (listOfMatchingCards.size() == 1) {
 			return listOfMatchingCards.get(0);
 		}
+		//if we have multiple matching cards, return a random one
 		else if (listOfMatchingCards.size() > 1) {
 			int randomCard = new Random().nextInt(listOfMatchingCards.size());
 			return listOfMatchingCards.get(randomCard);
 		}
+		//else, return null
 		else return null;
 	}
 
