@@ -286,45 +286,118 @@ class playerInteractionTests {
 		assertTrue(suggestion.getWeapon().equals("Candlestick"));
 
 	}
-	
+
 	@Test
 	void testDisproveSuggestion() {
-		//TESTS FOR HAVING ONE MATCHING CARD
-		
+		// TESTS FOR HAVING ONE MATCHING CARD
+
 		// grab the first computer player
 		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
 		ArrayList<Card> knownCards = new ArrayList<Card>();
-		//set our known cards to just miss scarlett
+		// set our known cards to just miss scarlett
 		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
 		knownCards.add(missScarlett);
 		testPlayer.setListOfCards(knownCards);
-		//we will be testing with the suggestion of miss scarlett, kitchen, and candlestick
+		// we will be testing with the suggestion of miss scarlett, kitchen, and
+		// candlestick
 		Solution testSuggestion = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
-		//because we have the miss scarlett card, and the player is asking about it, we must return the miss scarlett card
+		// because we have the miss scarlett card, and the player is asking about it, we
+		// must return the miss scarlett card
 		assertEquals(missScarlett, testPlayer.disproveSuggestion(testSuggestion));
-		
-		//TESTS FOR HAVING MULTIPLE MATCHING CARDS
-		
-		//now, we will add kitchen to our list of cards. Now we have miss scarlett and the kitchen.
+
+		// TESTS FOR HAVING MULTIPLE MATCHING CARDS
+
+		// now, we will add kitchen to our list of cards. Now we have miss scarlett and
+		// the kitchen.
 		Card kitchen = new Card("Kitchen", CardType.ROOM);
 		knownCards.add(kitchen);
 		testPlayer.setListOfCards(knownCards);
 		ArrayList<Card> testRandomCards = new ArrayList<Card>();
-		//since we have multiple cards from the suggestion, we must return a random one
-		for (int i = 0 ; i<100 ; i++) {
+		// since we have multiple cards from the suggestion, we must return a random one
+		for (int i = 0; i < 100; i++) {
 			testRandomCards.add(testPlayer.disproveSuggestion(testSuggestion));
 		}
-		//check to see that we picked both cards at least once
+		// check to see that we picked both cards at least once
 		assertTrue(testRandomCards.contains(missScarlett));
 		assertTrue(testRandomCards.contains(kitchen));
-		
-		//TESTS FOR NO MATCHING CARDS
-		
-		//clear our list of known cards, so now we know none of them
+
+		// TESTS FOR NO MATCHING CARDS
+
+		// clear our list of known cards, so now we know none of them
 		knownCards.clear();
 		testPlayer.setListOfCards(knownCards);
-		//since we don't have any cards to disprove the suggestion, must return null
+		// since we don't have any cards to disprove the suggestion, must return null
 		assertNull(testPlayer.disproveSuggestion(testSuggestion));
+	}
+
+	@Test
+	void testHandleSuggestion() {
+		// grab human player
+		HumanPlayer humanPlayer1 = (HumanPlayer) board.getListPeople().get(0);
+		// grab the computer players
+		ComputerPlayer computerPlayer1 = (ComputerPlayer) board.getListPeople().get(1);
+		ComputerPlayer computerPlayer2 = (ComputerPlayer) board.getListPeople().get(2);
+		ComputerPlayer computerPlayer3 = (ComputerPlayer) board.getListPeople().get(3);
+		ComputerPlayer computerPlayer4 = (ComputerPlayer) board.getListPeople().get(4);
+		ComputerPlayer computerPlayer5 = (ComputerPlayer) board.getListPeople().get(5);
+		ArrayList<Card> knownCards = new ArrayList<Card>();
+		// set known cards to nothing (no one has any cards)
+		humanPlayer1.setListOfCards(knownCards);
+		computerPlayer1.setListOfCards(knownCards);
+		computerPlayer2.setListOfCards(knownCards);
+		computerPlayer3.setListOfCards(knownCards);
+		computerPlayer4.setListOfCards(knownCards);
+		computerPlayer5.setListOfCards(knownCards);
+		// test suggestion will use miss scarlett, kitchen, and candlestick
+		Solution testSuggestion = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
+		// since no one has a card, must return null
+		assertNull(board.handleSuggestion(testSuggestion, humanPlayer1));
+
+		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
+		knownCards.add(missScarlett);
+		// give computer player 1 a miss scarlett card
+		computerPlayer1.setListOfCards(knownCards);
+		// since computer player 1 is the one asking the suggestion, and they already
+		// have the miss scarlett card, it must return null
+		assertNull(board.handleSuggestion(testSuggestion, computerPlayer1));
+
+		knownCards.clear();
+		// take away computer player 1's miss scarlett card
+		computerPlayer1.setListOfCards(knownCards);
+		knownCards.add(missScarlett);
+		// give human the miss scarlett card
+		humanPlayer1.setListOfCards(knownCards);
+		// since the computer is asking for miss scarlett, and the human player has it,
+		// the player must return the miss scarlett card.
+		assertEquals(missScarlett, board.handleSuggestion(testSuggestion, computerPlayer1));
+
+		// since the human is asking for miss scarlett, and they already have the card,
+		// must return null
+		assertNull(board.handleSuggestion(testSuggestion, humanPlayer1));
+
+		// give miss scarlett card to computer 1
+		computerPlayer1.setListOfCards(knownCards);
+		knownCards.clear();
+		// take away miss scarlett from human
+		humanPlayer1.setListOfCards(knownCards);
+		Card kitchen = new Card("Kitchen", CardType.ROOM);
+		knownCards.add(kitchen);
+		// give kitchen card to computer 2
+		computerPlayer2.setListOfCards(knownCards);
+		// since computer 1 comes before computer 2 in the list, the miss scarlett card
+		// will be returned (NOT the kitchen card)
+		assertEquals(missScarlett, board.handleSuggestion(testSuggestion, humanPlayer1));
+
+		// take away miss scarlett from computer 1
+		knownCards.clear();
+		computerPlayer1.setListOfCards(knownCards);
+		// give miss scarlett to human
+		knownCards.add(missScarlett);
+		humanPlayer1.setListOfCards(knownCards);
+		// computer player 1 will ask for miss scarlett, kitchen, and candlestick. since
+		// computer player 2 is next in the list, the kitchen card will be returned.
+		assertEquals(kitchen, board.handleSuggestion(testSuggestion, computerPlayer1));
+
 	}
 
 }

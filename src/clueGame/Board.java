@@ -331,6 +331,10 @@ public class Board {
 		return false;
 	}
 	
+	public Card handleSuggestion(Solution suggestion, Player player) {
+		return null;
+	}
+	
 	public Set<BoardCell> getAdjList(int row, int col) {
 		//returns the AdjMatrix at a boardcell
 		BoardCell c = getCellAt(row, col);
