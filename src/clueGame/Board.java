@@ -28,7 +28,7 @@ public class Board {
 	private String deckConfigFile;
 	private ArrayList<Player> listPeople = new ArrayList<Player>();
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
-	private ArrayList<Card> deck = new ArrayList<Card>();
+	ArrayList<Card> deck = new ArrayList<Card>();
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created

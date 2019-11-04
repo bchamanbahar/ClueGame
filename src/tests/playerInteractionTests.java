@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
@@ -284,6 +285,46 @@ class playerInteractionTests {
 		assertTrue(suggestion.getPerson().equals("Miss Scarlett"));
 		assertTrue(suggestion.getWeapon().equals("Candlestick"));
 
+	}
+	
+	@Test
+	void testDisproveSuggestion() {
+		//TESTS FOR HAVING ONE MATCHING CARD
+		
+		// grab the first computer player
+		ComputerPlayer testPlayer = (ComputerPlayer) board.getListPeople().get(1);
+		ArrayList<Card> knownCards = new ArrayList<Card>();
+		//set our known cards to just miss scarlett
+		Card missScarlett = new Card("Miss Scarlett", CardType.PERSON);
+		knownCards.add(missScarlett);
+		testPlayer.setListOfCards(knownCards);
+		//we will be testing with the suggestion of miss scarlett, kitchen, and candlestick
+		Solution testSuggestion = new Solution("Miss Scarlett", "Kitchen", "Candlestick");
+		//because we have the miss scarlett card, and the player is asking about it, we must return the miss scarlett card
+		assertEquals(missScarlett, testPlayer.disproveSuggestion(testSuggestion));
+		
+		//TESTS FOR HAVING MULTIPLE MATCHING CARDS
+		
+		//now, we will add kitchen to our list of cards. Now we have miss scarlett and the kitchen.
+		Card kitchen = new Card("Kitchen", CardType.ROOM);
+		knownCards.add(kitchen);
+		testPlayer.setListOfCards(knownCards);
+		ArrayList<Card> testRandomCards = new ArrayList<Card>();
+		//since we have multiple cards from the suggestion, we must return a random one
+		for (int i = 0 ; i<100 ; i++) {
+			testRandomCards.add(testPlayer.disproveSuggestion(testSuggestion));
+		}
+		//check to see that we picked both cards at least once
+		assertTrue(testRandomCards.contains(missScarlett));
+		assertTrue(testRandomCards.contains(kitchen));
+		
+		//TESTS FOR NO MATCHING CARDS
+		
+		//clear our list of known cards, so now we know none of them
+		knownCards.clear();
+		testPlayer.setListOfCards(knownCards);
+		//since we don't have any cards to disprove the suggestion, must return null
+		assertNull(testPlayer.disproveSuggestion(testSuggestion));
 	}
 
 }
