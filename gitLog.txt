@@ -1,3 +1,87 @@
+commit 69adafa1aaed28c500d34f9455009c4804f61f2c
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 16:16:57 2019 -0700
+
+    Added functionality for handling suggestions
+
+commit 6cc0da79a0bc3efbab466c474cc2566cb59ca1e1
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 15:51:50 2019 -0700
+
+    I forgot to save, now the tests should be there
+
+commit 30745ea3cc34f010730c6686bb464cd5b4fa96e4
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 15:51:11 2019 -0700
+
+    Added tests for handling suggestions
+
+commit e0044cc77d8b867a3504a251cd0fd9632beed672
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 15:18:58 2019 -0700
+
+    Added functionality for disproving suggestions
+
+commit c3af5a31c0c990bb04c8555dffd732cbb7fe44b8
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 15:09:21 2019 -0700
+
+    added tests for disproving suggestions
+
+commit 90f4b3721ea203811e8ed15c19da839d66f1d3cf
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 14:46:09 2019 -0700
+
+    Added various comments for more explanation
+
+commit a6a41b12c808a8179865270dcfefba68bc9ebbb2
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Mon Nov 4 00:11:41 2019 -0700
+
+    Added functionality for computers creating suggestions
+
+commit b6ea6f5bd0499f872deff191a7f02ddc9d3cb3dc
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 23:35:58 2019 -0700
+
+    Added tests for creating a suggestion
+
+commit 6f81d4ee57c5951b606a189f7b74dfaea51062cf
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 23:04:54 2019 -0700
+
+    Added functionality for creating accusations
+
+commit 9d6ce1cb3716b579ec7eb98aa249ec57ba54f5d6
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 22:44:11 2019 -0700
+
+    Made tests for accusations
+
+commit 02e666bec1cc95d060d52c3430e0919221bfc4d2
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 22:09:58 2019 -0700
+
+    Tests pass for selecting a target
+
+commit a09229026ff6cf1f558b78918c699a5549fa2d1f
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 21:35:31 2019 -0700
+
+    I forgot to save... so NOW the tests should definitely be there
+
+commit 4c4e677b24dd7f8f79ea3e780faeb9c8745c3a64
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 21:34:04 2019 -0700
+
+    Forgot to do a git add, now the tests should actually be there
+
+commit 2c18e90d1753c903b34ad4c89edc07d0b6960e88
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 3 21:32:47 2019 -0700
+
+    Finished writing tests for selecting targets
+
 commit 3a0ff0891043b0923755a1495212b4d231947cca
 Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
 Date:   Thu Oct 31 12:15:47 2019 -0600
