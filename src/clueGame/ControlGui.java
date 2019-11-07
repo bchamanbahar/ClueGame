@@ -1,3 +1,8 @@
+/*
+ * Authors: 
+ * Mia Blanchard 
+ * Bijan Chamanbahar
+ */
 package clueGame;
 
 import java.awt.BorderLayout;
@@ -22,24 +27,29 @@ public class ControlGui extends JPanel {
 
 	public ControlGui() {
 		setLayout(new FlowLayout());
+		//add the "Whose turn?" 
 		JPanel panel = createWhoseTurn();
 		panel.setPreferredSize(new Dimension(250,60));
 		add(panel);
+		//add the next player and make an accusation buttons
 		panel = createButtons();
 		panel.setPreferredSize(new Dimension(450,80));
 		add(panel);
+		//add the die roll
 		panel = createDieRoll();	
 		panel.setPreferredSize(new Dimension(100,50));
 		add(panel);
+		//add the guess
 		panel = createGuess();
 		panel.setPreferredSize(new Dimension(350,70));
 		add(panel);
+		//add the guess result
 		panel = createGuessResult();
 		panel.setPreferredSize(new Dimension(250,50));
 		add(panel);	
 	}
 	
-	
+	//Makes dialog box for whose turn it is
 	private JPanel createWhoseTurn() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 1));
@@ -50,7 +60,7 @@ public class ControlGui extends JPanel {
 		return panel;
 	}
 
-	
+	//Makes dialog box for what the die roll is
 	private JPanel createDieRoll() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
@@ -63,6 +73,7 @@ public class ControlGui extends JPanel {
 		return panel;
 	}
 	
+	//Creates buttons for going to the next player and making an accusation
 	private JPanel createButtons() {
 		JButton nextPlayer = new JButton("Next player");
 		JButton accusation = new JButton("Make an accusation");
@@ -73,6 +84,7 @@ public class ControlGui extends JPanel {
 		return panel;
 	}
 	
+	//Makes dialog box for the guess
 	private JPanel createGuess() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2, 2));
@@ -85,6 +97,7 @@ public class ControlGui extends JPanel {
 		return panel;
 	}
 	
+	//Makes dialog box for the guess result
 	private JPanel createGuessResult() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));	
@@ -98,12 +111,14 @@ public class ControlGui extends JPanel {
 	}
 
 	public static void main(String[] args) {
+		//creates the display box
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("GUI Example");
 		frame.setSize(750, 225);
 		ControlGui gui = new ControlGui();
 		frame.add(gui, BorderLayout.CENTER);
+		//makes display visable
 		frame.setVisible(true);
 	}
 
