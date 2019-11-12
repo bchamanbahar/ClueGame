@@ -1,6 +1,6 @@
 C,C,C,C,W,W,W,R,R,R,R,R,W,L,L,L,L,L,W,W,S,S,S
 C,C,C,C,C,W,W,R,R,R,R,R,W,L,L,L,L,L,W,W,S,S,S
-C,CN,C,C,C,W,W,R,RN,R,R,R,W,LL,LN,L,L,L,W,W,S,SN,S
+C,C,CN,C,C,W,W,R,RN,R,R,R,W,LL,LN,L,L,L,W,W,S,SN,S
 C,C,C,C,C,W,W,R,R,R,R,R,W,L,L,L,L,L,W,W,S,S,S
 C,C,C,CR,W,W,W,R,RD,R,R,R,W,L,L,L,L,L,W,W,SL,S,S
 W,W,W,W,W,W,W,W,W,W,W,W,W,W,L,LD,L,W,W,W,S,S,S
@@ -16,7 +16,8 @@ W,W,W,W,W,W,W,W,W,D,D,DU,D,D,D,W,W,W,W,W,W,W,W
 W,W,W,W,W,W,W,W,W,D,D,D,D,D,D,W,W,W,OL,O,O,O,O
 K,K,K,K,K,K,W,W,W,D,D,D,D,D,D,W,W,W,O,O,O,O,O
 K,K,K,K,K,KR,W,W,D,D,D,D,D,D,DR,W,W,W,O,O,O,O,O
-K,K,KN,K,K,K,W,W,D,D,DN,D,D,D,D,W,W,W,O,ON,O,O,O
+K,K,KN,K,K,K,W,W,DN,D,DN,D,D,D,D,W,W,W,O,ON,O,O,O
 K,K,K,K,K,K,W,W,D,D,D,D,D,D,D,W,W,W,O,O,O,O,O
 K,K,K,K,K,K,W,W,D,D,D,D,D,D,D,W,W,W,O,O,O,O,O
 K,K,K,K,K,K,W,W,D,D,D,D,D,D,D,W,W,W,O,O,O,O,O
+,,,,,,,,,,,,,,,,,,O,,,,

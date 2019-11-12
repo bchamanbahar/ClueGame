@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color; // BE SURE TO USE THIS IMPORT
+import java.awt.Graphics;
 //not the one Eclipse suggests
 import java.lang.reflect.Field;
 import java.util.*;
@@ -8,6 +9,7 @@ import java.util.*;
 public class Player {
 
 	private String playerName;
+	private static int LENGTH = 30;
 	int row;
 	int column;
 	private Color color;
@@ -108,6 +110,14 @@ public class Player {
 
 	public void setColumn(int column) {
 		this.column = column;
+	}
+
+	public void draw(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.drawOval(column*LENGTH, row*LENGTH, LENGTH, LENGTH);
+		g.setColor(color);
+		g.fillOval(column*LENGTH, row*LENGTH, LENGTH, LENGTH);
+		
 	}
 
 }

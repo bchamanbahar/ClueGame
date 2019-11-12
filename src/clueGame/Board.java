@@ -6,6 +6,10 @@
 package clueGame;
 
 import java.util.*;
+
+import javax.swing.JPanel;
+
+import java.awt.Graphics;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,7 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
-public class Board {
+public class Board extends JPanel{
 
 	private int numRows;
 	private int numColumns;
@@ -36,7 +40,7 @@ public class Board {
 	// constructor is private to ensure only one can be created
 	private Board() {
 
-	}
+	}	
 
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -109,8 +113,32 @@ public class Board {
 							cell.setDoor(DoorDirection.RIGHT);
 						} else
 							cell.setDoor(DoorDirection.NONE);
-					} else
+					} else {
 						cell.setDoor(DoorDirection.NONE);
+					}
+					if(dataString.length() >1 && dataString.charAt(1) == 'N') {
+						if(dataString.charAt(0) == 'C') {
+							cell.setRoom(Room.CONSERVATORY);
+						} else if (dataString.charAt(0) == 'R') {
+							cell.setRoom(Room.BILLIARD);
+						} else if (dataString.charAt(0) == 'L') {
+							cell.setRoom(Room.LIBRARY);
+						} else if (dataString.charAt(0) == 'S') {
+							cell.setRoom(Room.STUDY);
+						} else if (dataString.charAt(0) == 'B') {
+							cell.setRoom(Room.BALLROOM);
+						} else if (dataString.charAt(0) == 'D') {
+							cell.setRoom(Room.DINING);
+						} else if (dataString.charAt(0) == 'K') {
+							cell.setRoom(Room.KITCHEN);
+						} else if (dataString.charAt(0) == 'O') {
+							cell.setRoom(Room.LOUNGE);
+						} else if (dataString.charAt(0) == 'H') {
+							cell.setRoom(Room.HALL);
+						}
+					} else {
+						cell.setRoom(Room.NONE);
+					}
 					temp[i][j] = cell;
 					j++;
 				}
@@ -411,6 +439,21 @@ public class Board {
 				}
 				visitedList.remove(c);
 			}
+		}
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		//tell all the tiles to paint themselves
+		g.setColor(Color.BLUE);
+		g.drawRect(0,0,100,100);
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				board[i][j].draw(g);
+			}
+		}
+		for(Player c: listPeople) {
+			c.draw(g);
 		}
 	}
 

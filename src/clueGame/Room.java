@@ -1,0 +1,5 @@
+package clueGame;
+
+public enum Room {
+	CONSERVATORY, BILLIARD, LIBRARY, STUDY, BALLROOM, HALL, KITCHEN, DINING, LOUNGE, NONE
+}
