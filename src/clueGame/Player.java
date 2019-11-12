@@ -120,4 +120,7 @@ public class Player {
 		
 	}
 
+	public void setLength(int i) {
+		LENGTH = i;
+	}
 }

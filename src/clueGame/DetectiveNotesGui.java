@@ -17,17 +17,7 @@ public class DetectiveNotesGui extends JDialog {
 	private static Board board = Board.getInstance();
 
 	public DetectiveNotesGui() throws Exception {
-		// I didn't want to hard code the list of people, rooms, and weapons, (because
-		// they could possibly change depending on the configuration files) so there's
-		// an instance of board that I initialize. This bit of code will likely be
-		// deleted, since I mainly just needed it there for testing purposes.
 
-		// set the file names to use my config files
-		board.setConfigFiles("Clue_Layout.csv", "legend.txt");
-		// Initialize will load BOTH config files
-		board.setPersonFile("people.txt");
-		board.setDeckFile("deck.txt");
-		board.initialize();
 		people = new JComboBox<String>();
 		weapons = new JComboBox<String>();
 		rooms = new JComboBox<String>();

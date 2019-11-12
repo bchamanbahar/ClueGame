@@ -22,6 +22,7 @@ public class Board extends JPanel{
 	private int numRows;
 	private int numColumns;
 	public static final int MAX_BOARD_SIZE = 50;
+	public static final int LENGTH = 32;
 	private BoardCell[][] board;
 	Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
@@ -31,7 +32,7 @@ public class Board extends JPanel{
 	private String roomConfigFile;
 	private String personConfigFile;
 	private String deckConfigFile;
-	private ArrayList<Player> listPeople = new ArrayList<Player>();
+	ArrayList<Player> listPeople = new ArrayList<Player>();
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
 	ArrayList<Card> deck = new ArrayList<Card>();
 	// variable used for singleton pattern
@@ -139,6 +140,7 @@ public class Board extends JPanel{
 					} else {
 						cell.setRoom(Room.NONE);
 					}
+					cell.setLength(LENGTH);
 					temp[i][j] = cell;
 					j++;
 				}
@@ -237,11 +239,13 @@ public class Board extends JPanel{
 					computer.setCol(Integer.parseInt(data[4].substring(1)));
 					// add to list of people
 					listPeople.add(computer);
+
 				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		listPeople.get(0).setLength(LENGTH);
 	}
 
 	public void dealCards() {
