@@ -210,7 +210,7 @@ public class Board extends JPanel{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		deck = deckCards;
+		deck = (ArrayList<Card>) (deckCards.clone());
 	}
 
 	// load the file to set up the people

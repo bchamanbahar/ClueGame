@@ -8,6 +8,8 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.Box;
@@ -26,27 +28,41 @@ public class ControlGui extends JPanel {
 	
 
 	public ControlGui() {
-		setLayout(new FlowLayout());
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
 		//add the "Whose turn?" 
 		JPanel panel = createWhoseTurn();
-		panel.setPreferredSize(new Dimension(250,60));
-		add(panel);
+		c.gridwidth = 1;
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(panel, c);
 		//add the next player and make an accusation buttons
 		panel = createButtons();
-		panel.setPreferredSize(new Dimension(450,80));
-		add(panel);
+		c.ipady = 40;
+		c.gridwidth = 2;
+		c.gridx = 1;
+		c.gridy = 0;
+		add(panel, c);
 		//add the die roll
-		panel = createDieRoll();	
-		panel.setPreferredSize(new Dimension(100,50));
-		add(panel);
+		panel = createDieRoll();
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(panel, c);
 		//add the guess
 		panel = createGuess();
-		panel.setPreferredSize(new Dimension(350,70));
-		add(panel);
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 1;
+		add(panel, c);
 		//add the guess result
 		panel = createGuessResult();
-		panel.setPreferredSize(new Dimension(250,50));
-		add(panel);	
+		c.gridwidth = 1;
+		c.gridx = 2;
+		c.gridy = 1;
+		add(panel, c);	
 	}
 	
 	//Makes dialog box for whose turn it is
@@ -114,7 +130,6 @@ public class ControlGui extends JPanel {
 		//creates the display box
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("GUI Example");
 		frame.setSize(750, 225);
 		ControlGui gui = new ControlGui();
 		frame.add(gui, BorderLayout.CENTER);
