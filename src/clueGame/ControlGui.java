@@ -11,11 +11,14 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -94,6 +97,8 @@ public class ControlGui extends JPanel {
 		JButton nextPlayer = new JButton("Next player");
 		JButton accusation = new JButton("Make an accusation");
 		JPanel panel = new JPanel();
+		nextPlayer.addActionListener(new ButtonListener());
+		accusation.addActionListener(new ButtonListener());
 		panel.setLayout(new GridLayout(1, 2));
 		panel.add(nextPlayer);
 		panel.add(accusation);
@@ -126,6 +131,16 @@ public class ControlGui extends JPanel {
 		return panel;
 	}
 
+	private class ButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("Button pressed");
+			
+		}
+	}
+
+	
 	public static void main(String[] args) {
 		//creates the display box
 		JFrame frame = new JFrame();
