@@ -1,3 +1,45 @@
+commit f0a3cffd2bc3189c8f1d16a347c321ac54c31fb3
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Tue Nov 12 17:36:34 2019 -0700
+
+    Finished gui for displaying cards, as well as added a file menu
+
+commit 5e5aecb896af46203b25803dca7cb6998af7d732
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Tue Nov 12 12:40:40 2019 -0700
+
+    more guis
+
+commit 514fb425699a786e44d6d6de8e649adc39e68c31
+Author: Bijan Chamanbahar <bchamanbahar@mines.edu>
+Date:   Tue Nov 12 00:32:57 2019 -0700
+
+    Created GUI for board
+
+commit 00162c7a7fd2af3196a18d5564ecd04d56b68fe3
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Sun Nov 10 22:57:12 2019 -0700
+
+    Forgot to track the new gui class
+
+commit 7f7bdb111a6bd6948b32379f9dc3ed98370e3260
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Wed Nov 6 17:33:19 2019 -0700
+
+    Added a couple comments
+
+commit 8c3e5b9bac0f47f3f2f344c32975120c2b070f6c
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Wed Nov 6 17:29:01 2019 -0700
+
+    Needed to do a git add, oops.
+
+commit 22e293846f2b946c08d122622063c25d7b039216
+Author: miablanchard <mblanchard@mymail.mines.edu>
+Date:   Wed Nov 6 17:28:24 2019 -0700
+
+    Added GUI for game control
+
 commit 69adafa1aaed28c500d34f9455009c4804f61f2c
 Author: miablanchard <mblanchard@mymail.mines.edu>
 Date:   Mon Nov 4 16:16:57 2019 -0700

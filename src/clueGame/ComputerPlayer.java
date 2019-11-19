@@ -22,6 +22,7 @@ public class ComputerPlayer extends Player {
 				if (!previousLocations.isEmpty() && !(previousLocations.get(previousLocations.size() - 1).equals(c))) {
 					//add to our list of previous locations (since we're moving there)
 					previousLocations.add(c);
+					board.pickedLocation = true;
 					return c;
 				}
 			}
@@ -33,6 +34,7 @@ public class ComputerPlayer extends Player {
 			if (i == randomNumber) {
 				//add to our list of previous locations (since we're moving there)
 				previousLocations.add(c);
+				board.pickedLocation = true;
 				return c;
 			}
 			i++;

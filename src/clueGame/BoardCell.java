@@ -16,7 +16,8 @@ public class BoardCell {
 	private char initial; 
 	private DoorDirection door;
 	private Room room;
-
+	private static Board board = Board.getInstance();
+	
 	public void setDoor(DoorDirection door) {
 		this.door = door;
 	}
@@ -108,17 +109,25 @@ public class BoardCell {
 	public void draw(Graphics g) {
 		if(isWalkway()) {
 			g.setColor(Color.YELLOW);
+			for (BoardCell c: board.targetsList) {
+				if (this.equals(c)) {
+					g.setColor(Color.CYAN);
+				}
+			}
 			g.fillRect(row*LENGTH, col*LENGTH, LENGTH, LENGTH);
 			g.setColor(Color.BLACK);
 			g.drawRect(row*LENGTH, col*LENGTH, LENGTH, LENGTH);
 		}else if(isDoorway()){
 			g.setColor(Color.GRAY);
+			for (BoardCell c: board.targetsList) {
+				if (this.equals(c)) {
+					g.setColor(Color.CYAN);
+				}
+			}
 			g.fillRect(row*LENGTH, col*LENGTH, LENGTH, LENGTH);
-
 			g.setColor(Color.BLUE);
 			switch (door) {
 			case UP: 
-
 				g.fillRect(row*LENGTH, col*LENGTH, LENGTH, LENGTH / 10);
 				break;
 			case DOWN:

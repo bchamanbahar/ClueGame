@@ -17,16 +17,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
-public class Board extends JPanel{
+public class Board extends JPanel {
 
 	private int numRows;
 	private int numColumns;
 	public static final int MAX_BOARD_SIZE = 50;
-	public static final int LENGTH = 32;
+	public static final int LENGTH = 30;
 	private BoardCell[][] board;
 	Map<Character, String> legend;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targetsList;
+	Set<BoardCell> targetsList;
 	private Set<BoardCell> visitedList;
 	private String boardConfigFile;
 	private String roomConfigFile;
@@ -35,13 +35,18 @@ public class Board extends JPanel{
 	ArrayList<Player> listPeople = new ArrayList<Player>();
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
 	ArrayList<Card> deck = new ArrayList<Card>();
+	private int playerIndex = 0;
+	Player currentPlayer;
+	boolean pickedLocation = false;
+	int dieRoll = rollDie();
+
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 
 	// constructor is private to ensure only one can be created
 	private Board() {
 
-	}	
+	}
 
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -57,6 +62,8 @@ public class Board extends JPanel{
 		loadPersonConfigFile();
 		loadDeckConfigFile();
 		calcAdj();
+		currentPlayer = listPeople.get(0);
+		calcTargets(currentPlayer.getRow(), currentPlayer.getCol(), dieRoll);
 	}
 
 	// load the rooms
@@ -117,8 +124,8 @@ public class Board extends JPanel{
 					} else {
 						cell.setDoor(DoorDirection.NONE);
 					}
-					if(dataString.length() >1 && dataString.charAt(1) == 'N') {
-						if(dataString.charAt(0) == 'C') {
+					if (dataString.length() > 1 && dataString.charAt(1) == 'N') {
+						if (dataString.charAt(0) == 'C') {
 							cell.setRoom(Room.CONSERVATORY);
 						} else if (dataString.charAt(0) == 'R') {
 							cell.setRoom(Room.BILLIARD);
@@ -403,7 +410,7 @@ public class Board extends JPanel{
 				return listMatchingCards.get(randomCard);
 			}
 		}
-		//if no matching cards were found, return null
+		// if no matching cards were found, return null
 		return null;
 	}
 
@@ -448,17 +455,23 @@ public class Board extends JPanel{
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		//tell all the tiles to paint themselves
+		// tell all the tiles to paint themselves
 		g.setColor(Color.BLUE);
-		g.drawRect(0,0,100,100);
-		for(int i = 0; i < board.length; i++) {
-			for(int j = 0; j < board[i].length; j++) {
+		g.drawRect(0, 0, 100, 100);
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
 				board[i][j].draw(g);
 			}
 		}
-		for(Player c: listPeople) {
+		for (Player c : listPeople) {
 			c.draw(g);
 		}
+	}
+
+	// roll the die from 1-6
+	public int rollDie() {
+		dieRoll = (int) (Math.random() * 6) + 1;
+		return dieRoll;
 	}
 
 	// gets the list of people
@@ -471,8 +484,26 @@ public class Board extends JPanel{
 		return deckCards;
 	}
 
+	// gets deck of cards
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
 
+	// goes to next player in the list
+	public void goToNextPlayer() {
+		playerIndex = (playerIndex + 1) % (listPeople.size());
+		currentPlayer = listPeople.get(playerIndex);
+		// roll the die for the next player
+		rollDie();
+		// calculate which targets they can go to
+		calcTargets(currentPlayer.getRow(), currentPlayer.getCol(), dieRoll);
+		// if they're a human, redraw the board so it shows which boardcells are the
+		// targets
+		if (currentPlayer instanceof HumanPlayer) {
+			repaint();
+		}
+		// set the picked location to false, so we don't accidentally move onto the next
+		// player without selecting a target
+		pickedLocation = false;
+	}
 }

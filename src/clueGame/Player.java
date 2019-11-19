@@ -117,7 +117,6 @@ public class Player {
 		g.drawOval(column*LENGTH, row*LENGTH, LENGTH, LENGTH);
 		g.setColor(color);
 		g.fillOval(column*LENGTH, row*LENGTH, LENGTH, LENGTH);
-		
 	}
 
 	public void setLength(int i) {
