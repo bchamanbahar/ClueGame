@@ -36,7 +36,7 @@ public class Board extends JPanel {
 	private ArrayList<Card> deckCards = new ArrayList<Card>();
 	ArrayList<Card> deck = new ArrayList<Card>();
 	private int playerIndex = 0;
-	Player currentPlayer;
+	Player currentPlayer = new Player();
 	boolean pickedLocation = false;
 	int dieRoll = rollDie();
 

@@ -73,7 +73,7 @@ public class ControlGui extends JPanel {
 	private JPanel createWhoseTurn() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 1));
-		output = new JTextField(20);
+		output = new JTextField(board.currentPlayer.getPlayerName());
 		output.setEditable(false);
 		panel.add(output);
 		panel.setBorder(new TitledBorder(new EmptyBorder(10, 10, 10, 10), "Whose Turn?"));
