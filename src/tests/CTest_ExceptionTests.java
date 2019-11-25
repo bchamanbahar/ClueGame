@@ -25,6 +25,8 @@ public class CTest_ExceptionTests {
 		board.setConfigFiles("CTest_ClueLayoutBadColumns.csv", "CTest_ClueLegend.txt");
 		// Instead of initialize, we call the two load functions directly.
 		// This is necessary because initialize contains a try-catch. 
+		board.setPersonFile("people.txt");
+		board.setDeckFile("deck.txt");
 		board.loadRoomConfig();
 		// This one should throw an exception
 		board.loadBoardConfig();

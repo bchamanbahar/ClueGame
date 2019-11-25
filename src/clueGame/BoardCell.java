@@ -110,7 +110,7 @@ public class BoardCell {
 		if(isWalkway()) {
 			g.setColor(Color.YELLOW);
 			for (BoardCell c: board.targetsList) {
-				if (this.equals(c)) {
+				if (this.equals(c) && !board.pickedLocation) {
 					g.setColor(Color.CYAN);
 				}
 			}
@@ -120,7 +120,7 @@ public class BoardCell {
 		}else if(isDoorway()){
 			g.setColor(Color.GRAY);
 			for (BoardCell c: board.targetsList) {
-				if (this.equals(c)) {
+				if (this.equals(c) && !board.pickedLocation) {
 					g.setColor(Color.CYAN);
 				}
 			}

@@ -6,7 +6,9 @@ public class Solution {
 	public String weapon;
 	
 	public Solution() {
-		
+		person = " ";
+		room = " ";
+		weapon = " ";
 	}
 
 	public Solution(String person, String room, String weapon) {

@@ -24,7 +24,9 @@ public class adjTargetsTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("Clue_Layout.csv", "legend.txt");		
+		board.setConfigFiles("Clue_Layout.csv", "legend.txt");	
+		board.setPersonFile("people.txt");
+		board.setDeckFile("deck.txt");
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
@@ -183,8 +185,8 @@ public class adjTargetsTests {
 		//Targets when leaving a room
 		board.calcTargets(3, 9, 1);
 		targets= board.getTargets();
-		assertEquals(1, targets.size());
-		assertTrue(targets.contains(board.getCellAt(4, 9)));
+		assertEquals(0, targets.size());
+
 
 	}
 	

@@ -39,7 +39,10 @@ public class Board extends JPanel {
 	Player currentPlayer = new Player();
 	boolean pickedLocation = false;
 	int dieRoll = rollDie();
-
+	Card guess = new Card();
+	Solution suggest = new Solution();
+	Solution solution = new Solution();
+	Card noClue = new Card("No new clue", CardType.PERSON);
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 
@@ -258,6 +261,27 @@ public class Board extends JPanel {
 	public void dealCards() {
 		// shuffle deck
 		Collections.shuffle(deckCards, new Random());
+		for (int i = 0; i<deckCards.size(); i++) {
+			if (deckCards.get(i).getCardType() == CardType.WEAPON) {
+				solution.setWeapon(deckCards.get(i).getName());
+				deckCards.remove(i);
+				break;
+			}
+		}
+		for (int i = 0; i<deckCards.size(); i++) {
+			if (deckCards.get(i).getCardType() == CardType.PERSON) {
+				solution.setPerson(deckCards.get(i).getName());
+				deckCards.remove(i);
+				break;
+			}
+		}
+		for (int i = 0; i<deckCards.size(); i++) {
+			if (deckCards.get(i).getCardType() == CardType.ROOM) {
+				solution.setRoom(deckCards.get(i).getName());
+				deckCards.remove(i);
+				break;
+			}
+		}
 		// counts which player we're dealing to
 		int counter = 0;
 		// iterator to go over the deck, so we can remove cards as we go
@@ -273,6 +297,7 @@ public class Board extends JPanel {
 			// remove card from deck
 			it.remove();
 		}
+		
 	}
 
 	// converts string to color
@@ -364,29 +389,41 @@ public class Board extends JPanel {
 	}
 
 	public boolean checkAccusation(Solution accusation) {
+		if (accusation.equals(solution)) {
+			return true;
+		}
 		return false;
 	}
 
 	public Card handleSuggestion(Solution suggestion, Player player) {
+		suggest = suggestion;
 		ArrayList<Card> listMatchingCards = new ArrayList<Card>();
 		// start index at next player in list
 		for (int i = listPeople.indexOf(player) + 1; i < listPeople.size(); i++) {
 			// if one of the suggestions is in their list of cards, add it to the list of
 			// matching cards
 			for (Card c : listPeople.get(i).getListOfCards()) {
-				if (c.getName() == suggestion.getPerson() || c.getName() == suggestion.getRoom()
-						|| c.getName() == suggestion.getWeapon()) {
+				if (c.getName().equals(suggestion.getPerson()) || c.getName().equals(suggestion.getRoom())
+						|| c.getName().equals(suggestion.getWeapon())) {
 					listMatchingCards.add(c);
 				}
 			}
 			// if there is only one matching card, must return it
 			if (listMatchingCards.size() == 1) {
-				return listMatchingCards.get(0);
+				guess = listMatchingCards.get(0);
+				if (player instanceof ComputerPlayer) {
+					((ComputerPlayer)player).addKnownCard(guess);
+				}
+				return guess;
 			}
 			// if there are multiple matching cards, select one randomly
 			else if (listMatchingCards.size() > 1) {
 				int randomCard = new Random().nextInt(listMatchingCards.size());
-				return listMatchingCards.get(randomCard);
+				guess = listMatchingCards.get(randomCard);
+				if (player instanceof ComputerPlayer) {
+					((ComputerPlayer)player).addKnownCard(guess);
+				}
+				return guess;
 			}
 		}
 		// start back at the beginning of the list of players, if we did not already
@@ -395,22 +432,31 @@ public class Board extends JPanel {
 			// if one of the suggestions is in their list of cards, add it to the list of
 			// matching cards
 			for (Card c : listPeople.get(i).getListOfCards()) {
-				if (c.getName() == suggestion.getPerson() || c.getName() == suggestion.getRoom()
-						|| c.getName() == suggestion.getWeapon()) {
+				if (c.getName().equals(suggestion.getPerson()) || c.getName().equals(suggestion.getRoom())
+						|| c.getName().equals(suggestion.getWeapon())) {
 					listMatchingCards.add(c);
 				}
 			}
 			// if there is only one matching card, must return it
 			if (listMatchingCards.size() == 1) {
-				return listMatchingCards.get(0);
+				guess = listMatchingCards.get(0);
+				if (player instanceof ComputerPlayer) {
+					((ComputerPlayer)player).addKnownCard(guess);
+				}
+				return guess;
 			}
 			// if there are multiple matching cards, select one randomly
 			else if (listMatchingCards.size() > 1) {
 				int randomCard = new Random().nextInt(listMatchingCards.size());
-				return listMatchingCards.get(randomCard);
+				guess = listMatchingCards.get(randomCard);
+				if (player instanceof ComputerPlayer) {
+					((ComputerPlayer)player).addKnownCard(guess);
+				}
+				return guess;
 			}
 		}
 		// if no matching cards were found, return null
+		guess = noClue;
 		return null;
 	}
 

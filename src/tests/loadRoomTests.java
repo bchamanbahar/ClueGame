@@ -33,6 +33,8 @@ public class loadRoomTests {
 		// set the file names to use my config files
 		board.setConfigFiles("Clue_Layout.csv", "legend.txt");		
 		// Initialize will load BOTH config files 
+		board.setPersonFile("people.txt");
+		board.setDeckFile("deck.txt");
 		board.initialize();
 	}
 	@Test
@@ -93,7 +95,7 @@ public class loadRoomTests {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(15, numDoors);
+		Assert.assertEquals(14, numDoors);
 	}
 	
 	@Test

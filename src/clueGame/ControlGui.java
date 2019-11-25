@@ -6,6 +6,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -16,6 +17,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,8 +33,27 @@ public class ControlGui extends JPanel {
 	private JTextField output;
 	private static Board board = Board.getInstance();
 	JPanel dieRoll;
+	JDialog accusation;
+	Solution accuse = new Solution();
+	JComboBox<String> people, weapons, rooms;
+	boolean canceled = false;
 
 	public ControlGui() {
+		people = new JComboBox<String>();
+		weapons = new JComboBox<String>();
+		rooms = new JComboBox<String>();
+		for (Card c : board.deck) {
+			// get list of cards, and add them to its respective combo box
+			if (c.getCardType() == CardType.PERSON) {
+				people.addItem(c.getName());
+			}
+			if (c.getCardType() == CardType.ROOM) {
+				rooms.addItem(c.getName());
+			}
+			if (c.getCardType() == CardType.WEAPON) {
+				weapons.addItem(c.getName());
+			}
+		}
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -111,7 +133,8 @@ public class ControlGui extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2, 2));
 		JLabel nameLabel = new JLabel("Guess");
-		output = new JTextField(20);
+		output = new JTextField(
+				board.suggest.getPerson() + " " + board.suggest.getWeapon() + " " + board.suggest.getRoom());
 		output.setEditable(false);
 		panel.add(nameLabel);
 		panel.add(output, BorderLayout.SOUTH);
@@ -124,7 +147,7 @@ public class ControlGui extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		JLabel nameLabel = new JLabel("Response");
-		output = new JTextField(20);
+		output = new JTextField(board.guess.getName());
 		output.setEditable(false);
 		panel.add(nameLabel);
 		panel.add(output);
@@ -147,11 +170,59 @@ public class ControlGui extends JPanel {
 				// if next player is a computer, run algorithm for picking a target, and move
 				// them there
 				if (board.currentPlayer instanceof ComputerPlayer) {
-					BoardCell c = ((ComputerPlayer) board.currentPlayer).pickLocation(board.targetsList);
-					board.currentPlayer.setRow(c.getCol());
-					board.currentPlayer.setCol(c.getRow());
-					board.targetsList.clear();
-					board.repaint();
+					var chance = Math.random();
+					if (chance < 0.1) {
+						accuse = ((ComputerPlayer) board.currentPlayer).makeAccusation();
+						if (board.checkAccusation(accuse)) {
+							JFrame frame = new JFrame();
+							JOptionPane.showMessageDialog(frame,
+									"The computer guessed correctly! They guessed " + accuse.getPerson() + " in the "
+											+ accuse.getRoom() + " with the " + accuse.getWeapon() + ".",
+									"Computer won!", JOptionPane.INFORMATION_MESSAGE);
+							System.exit(0);
+						} else {
+							JFrame frame = new JFrame();
+							JOptionPane.showMessageDialog(frame,
+									"The computer's guess was incorrect. They guessed " + accuse.getPerson()
+											+ " in the " + accuse.getRoom() + " with the " + accuse.getWeapon() + ".",
+									"Incorrect", JOptionPane.INFORMATION_MESSAGE);
+							board.pickedLocation = true;
+							board.targetsList.clear();
+							board.repaint();
+						}
+					} else if (((ComputerPlayer) board.currentPlayer).getKnownCards().size() == board.deck.size()) {
+						accuse = ((ComputerPlayer) board.currentPlayer).makeAccusation();
+						if (board.checkAccusation(accuse)) {
+							JFrame frame = new JFrame();
+							JOptionPane.showMessageDialog(frame,
+									"The computer guessed correctly! They guessed " + accuse.getPerson() + " in the "
+											+ accuse.getRoom() + " with the " + accuse.getWeapon() + ".",
+									"Computer won!", JOptionPane.INFORMATION_MESSAGE);
+							System.exit(0);
+						} else {
+							JFrame frame = new JFrame();
+							JOptionPane.showMessageDialog(frame,
+									"The computer's guess was incorrect. They guessed " + accuse.getPerson()
+											+ " in the " + accuse.getRoom() + " with the " + accuse.getWeapon() + ".",
+									"Incorrect", JOptionPane.INFORMATION_MESSAGE);
+							board.pickedLocation = true;
+							board.targetsList.clear();
+							board.repaint();
+						}
+					} else {
+						BoardCell c = ((ComputerPlayer) board.currentPlayer).pickLocation(board.targetsList);
+						board.currentPlayer.setRow(c.getCol());
+						board.currentPlayer.setCol(c.getRow());
+						board.targetsList.clear();
+						board.repaint();
+						if (board.getCellAt(board.currentPlayer.getRow(), board.currentPlayer.getCol()).isRoom()) {
+							Solution sugg = new Solution();
+							sugg = ((ComputerPlayer) board.currentPlayer).createSuggestion();
+							board.handleSuggestion(sugg, board.currentPlayer);
+							repaintWindow();
+						}
+					}
+
 				}
 			}
 
@@ -160,7 +231,42 @@ public class ControlGui extends JPanel {
 
 	private class accusationButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Button pressed");
+			if (board.pickedLocation) {
+				JFrame frame = new JFrame();
+				JOptionPane.showMessageDialog(frame, "You have already finished your turn.", "Error",
+						JOptionPane.WARNING_MESSAGE);
+			}
+			accusation = new JDialog(accusation, "Make an Accusation", Dialog.ModalityType.APPLICATION_MODAL);
+			accusation.setLayout(new GridLayout(4, 2));
+			accusation.add(new JTextField("Room"));
+			accusation.add(rooms);
+			accusation.add(new JTextField("Person"));
+			accusation.add(people);
+			accusation.add(new JTextField("Weapon"));
+			accusation.add(weapons);
+			JButton submit = new JButton("Submit");
+			JButton cancel = new JButton("Cancel");
+			submit.addActionListener(new submitButton());
+			cancel.addActionListener(new cancelButton());
+			accusation.add(submit);
+			accusation.add(cancel);
+			accusation.setSize(500, 500);
+			accusation.setVisible(true);
+			if (!canceled) {
+				if (board.checkAccusation(accuse)) {
+					JFrame frame = new JFrame();
+					JOptionPane.showMessageDialog(frame, "Congratulations, you guessed correctly!", "You've won!",
+							JOptionPane.INFORMATION_MESSAGE);
+					System.exit(0);
+				} else {
+					JFrame frame = new JFrame();
+					JOptionPane.showMessageDialog(frame, "Unfortunately, your guess was incorrect.", "Incorrect",
+							JOptionPane.INFORMATION_MESSAGE);
+					board.pickedLocation = true;
+					board.repaint();
+				}
+			}
+			canceled = false;
 		}
 	}
 
@@ -204,6 +310,22 @@ public class ControlGui extends JPanel {
 		add(panel, c);
 		this.validate();
 		this.repaint();
+	}
+
+	private class submitButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			accuse.setPerson((String) people.getSelectedItem());
+			accuse.setWeapon((String) weapons.getSelectedItem());
+			accuse.setRoom((String) rooms.getSelectedItem());
+			accusation.dispose();
+		}
+	}
+
+	private class cancelButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			canceled = true;
+			accusation.dispose();
+		}
 	}
 
 	public static void main(String[] args) {

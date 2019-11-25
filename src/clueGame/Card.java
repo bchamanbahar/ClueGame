@@ -5,7 +5,7 @@ public class Card {
 	private CardType cardType;
 	
 	public Card() {
-		
+
 	}
 	
 	public Card(String name, CardType type) {

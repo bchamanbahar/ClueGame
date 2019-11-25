@@ -17,7 +17,6 @@ public class DetectiveNotesGui extends JDialog {
 	private static Board board = Board.getInstance();
 
 	public DetectiveNotesGui() throws Exception {
-
 		people = new JComboBox<String>();
 		weapons = new JComboBox<String>();
 		rooms = new JComboBox<String>();
@@ -56,6 +55,7 @@ public class DetectiveNotesGui extends JDialog {
 		add(panel);
 		add(weapons);
 	}
+
 
 	// creates checklist for list of people in our deck
 	private JPanel createPeopleCheckList() {

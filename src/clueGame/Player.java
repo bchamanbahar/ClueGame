@@ -102,6 +102,9 @@ public class Player {
 	// gives a card to a player
 	public void addACard(Card c) {
 		this.listOfCards.add(c);
+		if (this instanceof ComputerPlayer) {
+			((ComputerPlayer)this).addKnownCard(c);
+		}
 	}
 
 	public int getColumn() {

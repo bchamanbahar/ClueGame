@@ -12,27 +12,29 @@ public class ComputerPlayer extends Player {
 	private static Board board = Board.getInstance();
 
 	public ComputerPlayer() throws IOException {
-		
+
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		for (BoardCell c : targets) {
-			//if there is a room in our list of targets, and we did not previously enter the room, we must select it
+			// if there is a room in our list of targets, and we did not previously enter
+			// the room, we must select it
 			if (c.isRoom()) {
-				if (!previousLocations.isEmpty() && !(previousLocations.get(previousLocations.size() - 1).equals(c))) {
-					//add to our list of previous locations (since we're moving there)
+				if (previousLocations.size() > 1 && !(previousLocations.get(previousLocations.size() - 1).equals(c))
+						&& !(previousLocations.get(previousLocations.size() - 2).equals(c))) {
+					// add to our list of previous locations (since we're moving there)
 					previousLocations.add(c);
 					board.pickedLocation = true;
 					return c;
 				}
 			}
 		}
-		//else, pick a random location from our list of targets
+		// else, pick a random location from our list of targets
 		int randomNumber = new Random().nextInt(targets.size());
 		int i = 0;
 		for (BoardCell c : targets) {
 			if (i == randomNumber) {
-				//add to our list of previous locations (since we're moving there)
+				// add to our list of previous locations (since we're moving there)
 				previousLocations.add(c);
 				board.pickedLocation = true;
 				return c;
@@ -46,13 +48,8 @@ public class ComputerPlayer extends Player {
 		return previousLocations;
 	}
 
-	public boolean inPreviousLocations(BoardCell location) {
-		for (BoardCell c : previousLocations) {
-			if (c.equals(location)) {
-				return true;
-			}
-		}
-		return false;
+	public ArrayList<Card> getKnownCards() {
+		return knownCards;
 	}
 
 	public Solution makeAccusation() {
@@ -66,7 +63,7 @@ public class ComputerPlayer extends Player {
 				possibleCards.add(c);
 			}
 		}
-		//lists for our possible people, rooms, and weapons
+		// lists for our possible people, rooms, and weapons
 		ArrayList<Card> possiblePeople = new ArrayList();
 		ArrayList<Card> possibleRooms = new ArrayList();
 		ArrayList<Card> possibleWeapons = new ArrayList();
@@ -105,7 +102,7 @@ public class ComputerPlayer extends Player {
 				possibleCards.add(c);
 			}
 		}
-		//lists for our possible people and weapons
+		// lists for our possible people and weapons
 		ArrayList<Card> possiblePeople = new ArrayList();
 		ArrayList<Card> possibleWeapons = new ArrayList();
 		for (Card c : possibleCards) {
@@ -125,6 +122,21 @@ public class ComputerPlayer extends Player {
 		BoardCell location = board.getCellAt(row, column);
 		String room = board.legend.get(location.getInitial());
 		// our suggestion is the random person, the room we're in, and the random weapon
+		if (possibleWeapons.size() == 1) {
+			if (possiblePeople.size() == 1) {
+				Solution suggestion = new Solution(possiblePeople.get(0).getName(), room,
+						possibleWeapons.get(0).getName());
+				return suggestion;
+			}
+			Solution suggestion = new Solution(possiblePeople.get(randomPerson).getName(), room,
+					possibleWeapons.get(0).getName());
+			return suggestion;
+		}
+		if (possiblePeople.size() == 1) {
+			Solution suggestion = new Solution(possiblePeople.get(0).getName(), room,
+					possibleWeapons.get(randomWeapon).getName());
+			return suggestion;
+		}
 		Solution suggestion = new Solution(possiblePeople.get(randomPerson).getName(), room,
 				possibleWeapons.get(randomWeapon).getName());
 		return suggestion;
@@ -132,5 +144,9 @@ public class ComputerPlayer extends Player {
 
 	public void setKnownCards(ArrayList<Card> cards) {
 		knownCards = cards;
+	}
+
+	public void addKnownCard(Card card) {
+		knownCards.add(card);
 	}
 }
